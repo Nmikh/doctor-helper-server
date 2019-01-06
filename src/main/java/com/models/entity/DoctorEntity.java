@@ -1,13 +1,19 @@
 package com.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "DOCTOR")
 public class DoctorEntity {
+    @JsonIgnore
     private long id;
+
     private String name;
     private String surname;
+
+    @JsonIgnore
     private UserEntity userEntity;
 
     public DoctorEntity() {
