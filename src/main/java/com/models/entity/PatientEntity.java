@@ -9,7 +9,7 @@ public class PatientEntity {
     private long id;
     private String name;
     private String surname;
-    private RecordEntity recordEntity;
+    private RecordEntity record;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +44,12 @@ public class PatientEntity {
 
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL,
             fetch = FetchType.EAGER, optional = false)
-    public RecordEntity getRecordEntity() {
-        return recordEntity;
+    public RecordEntity getRecord() {
+        return record;
     }
 
-    public void setRecordEntity(RecordEntity recordEntity) {
-        this.recordEntity = recordEntity;
+    public void setRecord(RecordEntity recordEntity) {
+        this.record = recordEntity;
     }
 
     @Override

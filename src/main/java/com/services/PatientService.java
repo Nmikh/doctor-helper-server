@@ -12,13 +12,17 @@ public class PatientService {
     @Autowired
     PatientRepository patientRepository;
 
-    public void createPatient(PatientEntity patient){
+    public PatientEntity createPatient(PatientEntity patient){
 
         RecordEntity recordEntity = new RecordEntity();
 
-        recordEntity.setPatient(patient);
-        patient.setRecordEntity(recordEntity);
+        //recordEntity.setPatient(patient);
+        patient.setRecord(recordEntity);
 
         patientRepository.save(patient);
+
+        return patient;
     }
+
+
 }

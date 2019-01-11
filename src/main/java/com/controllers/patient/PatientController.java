@@ -30,8 +30,8 @@ public class PatientController {
             return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
         }
 
-        patientService.createPatient(patient);
+        PatientEntity patientReturn = patientService.createPatient(patient);
 
-        return new ResponseEntity(HttpStatus.resolve(201));
+        return new ResponseEntity(patientReturn, HttpStatus.resolve(201));
     }
 }

@@ -1,5 +1,7 @@
 package com.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -8,6 +10,8 @@ import java.util.Objects;
 public class PageEntity {
     private long id;
     private String description;
+
+    @JsonIgnore
     private RecordEntity record;
     private DoctorEntity doctor;
 

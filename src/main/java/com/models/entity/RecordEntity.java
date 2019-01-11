@@ -1,5 +1,7 @@
 package com.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +11,8 @@ import java.util.Objects;
 public class RecordEntity {
     private long id;
     private String description;
+
+    @JsonIgnore
     private PatientEntity patient;
     private List<PageEntity> pages;
 
