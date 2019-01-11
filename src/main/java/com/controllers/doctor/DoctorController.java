@@ -25,7 +25,7 @@ public class DoctorController {
         boolean result = doctorService.registerDoctor(doctor);
 
         if (result) {
-            return new ResponseEntity(HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.resolve(201));
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
