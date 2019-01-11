@@ -15,8 +15,8 @@ public class PatientService {
     public void createPatient(PatientEntity patient){
 
         RecordEntity recordEntity = new RecordEntity();
-        recordEntity.setPatient(patient);
 
+        recordEntity.setPatient(patient);
         patient.setRecordEntity(recordEntity);
 
         patientRepository.save(patient);
