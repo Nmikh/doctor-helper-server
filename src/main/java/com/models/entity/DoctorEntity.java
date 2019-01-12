@@ -25,7 +25,7 @@ public class DoctorEntity {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private UserEntity userEntity;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SPECIALIZATION_ID")
     private SpecializationEntity specialist;
