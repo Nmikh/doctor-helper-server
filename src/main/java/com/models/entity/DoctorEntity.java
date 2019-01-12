@@ -28,16 +28,16 @@ public class DoctorEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SPECIALIZATION_ID")
-    private SpecializationEntity specialist;
+    private SpecializationEntity specialization;
 
     public DoctorEntity() {
     }
 
-    public DoctorEntity(String name, String surname, UserEntity userEntity, SpecializationEntity specialist) {
+    public DoctorEntity(String name, String surname, UserEntity userEntity, SpecializationEntity specialization) {
         this.name = name;
         this.surname = surname;
         this.userEntity = userEntity;
-        this.specialist = specialist;
+        this.specialization = specialization;
     }
 
     public long getId() {
@@ -72,12 +72,12 @@ public class DoctorEntity {
         this.userEntity = userEntity;
     }
 
-    public SpecializationEntity getSpecialist() {
-        return specialist;
+    public SpecializationEntity getSpecialization() {
+        return specialization;
     }
 
-    public void setSpecialist(SpecializationEntity specialist) {
-        this.specialist = specialist;
+    public void setSpecialization(SpecializationEntity specialization) {
+        this.specialization = specialization;
     }
 
     @Override
