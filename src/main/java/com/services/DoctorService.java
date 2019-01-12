@@ -1,9 +1,11 @@
 package com.services;
 
 import com.DAO.DoctorRepository;
+import com.DAO.SpecializationRepository;
 import com.DAO.UserRepository;
 import com.models.Doctor;
 import com.models.entity.DoctorEntity;
+import com.models.entity.SpecializationEntity;
 import com.models.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,8 +20,14 @@ public class DoctorService {
     @Autowired
     UserRepository userRepository;
 
-    public boolean registerDoctor(Doctor doctor) {
-        if (userRepository.findByLogin(doctor.getLogin()) == null) {
+    @Autowired
+    SpecializationRepository specializationRepository;
+
+    public boolean registerDoctor(Doctor doctor, Long specializationId) {
+        SpecializationEntity specialization = specializationRepository.getOne(specializationId);
+
+        if (userRepository.findByLogin(doctor.getLogin()) == null
+                && specialization != null) {
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
             UserEntity user = userRepository.save(new UserEntity(doctor.getLogin(),
@@ -27,14 +35,14 @@ public class DoctorService {
 
             doctorRepository.save(
                     new DoctorEntity(doctor.getName(),
-                            doctor.getSurname(), user));
+                            doctor.getSurname(), user, specialization));
 
             return true;
         }
         return false;
     }
 
-    public DoctorEntity findDoctorByLogin(String login){
+    public DoctorEntity findDoctorByLogin(String login) {
         UserEntity user = userRepository.findByLogin(login);
         return doctorRepository.findByUserEntity(user);
     }
