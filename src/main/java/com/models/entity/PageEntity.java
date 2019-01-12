@@ -3,21 +3,47 @@ package com.models.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "PAGE")
 public class PageEntity {
-    private long id;
-    private String description;
-
-    @JsonIgnore
-    private RecordEntity record;
-    private DoctorEntity doctor;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
+    private long id;
+
+    @Basic
+    @Column(name = "THEME")
+    private String theme;
+
+    @Basic
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @Basic
+    @Column(name = "PARAMETERS")
+    private String parameters;
+
+    @Basic
+    @Column(name = "ANSWER")
+    private String answer;
+
+    @Basic
+    @Column(name = "PAGE_DATE")
+    private Date date;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RECORD_ID")
+    private RecordEntity record;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "DOCTOR_ID")
+    private DoctorEntity doctor;
+
     public long getId() {
         return id;
     }
@@ -26,8 +52,14 @@ public class PageEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "DESCRIPTION")
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -36,8 +68,30 @@ public class PageEntity {
         this.description = description;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RECORD_ID")
+    public String getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(String parameters) {
+        this.parameters = parameters;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public RecordEntity getRecord() {
         return record;
     }
@@ -46,8 +100,6 @@ public class PageEntity {
         this.record = record;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "DOCTOR_ID")
     public DoctorEntity getDoctor() {
         return doctor;
     }

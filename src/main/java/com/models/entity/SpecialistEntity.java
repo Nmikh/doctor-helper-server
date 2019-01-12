@@ -9,11 +9,22 @@ import javax.persistence.*;
 public class SpecialistEntity {
 
     @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
     private long id;
+
+    @Basic
+    @Column(name = "NAME", nullable = false, length = 100)
     private String name;
+
+    @Basic
+    @Column(name = "SURNAME", nullable = false, length = 100)
     private String surname;
 
     @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ID")
     private UserEntity userEntity;
 
     public SpecialistEntity() {
@@ -25,9 +36,6 @@ public class SpecialistEntity {
         this.userEntity = userEntity;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
     public long getId() {
         return id;
     }
@@ -36,8 +44,6 @@ public class SpecialistEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "NAME", nullable = false, length = 100)
     public String getName() {
         return name;
     }
@@ -46,8 +52,6 @@ public class SpecialistEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "SURNAME", nullable = false, length = 100)
     public String getSurname() {
         return surname;
     }
@@ -56,8 +60,6 @@ public class SpecialistEntity {
         this.surname = surname;
     }
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_ID")
     public UserEntity getUserEntity() {
         return userEntity;
     }

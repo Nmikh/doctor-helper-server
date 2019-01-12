@@ -3,22 +3,47 @@ package com.models.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "RECORD")
 public class RecordEntity {
-    private long id;
-    private String description;
-
-    @JsonIgnore
-    private PatientEntity patient;
-    private List<PageEntity> pages;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
+    private long id;
+
+    @Basic
+    @Column(name = "WEIGHT")
+    private Double weight;
+
+    @Basic
+    @Column(name = "HEIGHT")
+    private Double height;
+
+    @Basic
+    @Column(name = "BLOOD_GROUP")
+    private String bloodGroup;
+
+    @Basic
+    @Column(name = "SEX")
+    private Boolean sex;
+
+    @Basic
+    @Column(name = "BIRTHDAY")
+    private Date birthday;
+
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PATIENT_ID")
+    private PatientEntity patient;
+
+    @OneToMany(mappedBy = "record", fetch = FetchType.EAGER)
+    private List<PageEntity> pages;
+
     public long getId() {
         return id;
     }
@@ -27,18 +52,46 @@ public class RecordEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "DESCRIPTION")
-    public String getDescription() {
-        return description;
+    public double getWeight() {
+        return weight;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PATIENT_ID")
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    public Boolean getSex() {
+        return sex;
+    }
+
+    public void setSex(Boolean sex) {
+        this.sex = sex;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     public PatientEntity getPatient() {
         return patient;
     }
@@ -47,7 +100,6 @@ public class RecordEntity {
         this.patient = patient;
     }
 
-    @OneToMany(mappedBy = "record", fetch = FetchType.EAGER)
     public List<PageEntity> getPages() {
         return pages;
     }
@@ -56,17 +108,4 @@ public class RecordEntity {
         this.pages = pages;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RecordEntity that = (RecordEntity) o;
-        return id == that.id &&
-                Objects.equals(description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, description);
-    }
 }

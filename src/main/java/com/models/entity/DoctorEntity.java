@@ -8,13 +8,28 @@ import javax.persistence.*;
 @Table(name = "DOCTOR")
 public class DoctorEntity {
     @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
     private long id;
 
+    @Basic
+    @Column(name = "NAME", nullable = false, length = 100)
     private String name;
+
+    @Basic
+    @Column(name = "SURNAME", nullable = true, length = 100)
     private String surname;
 
     @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ID")
     private UserEntity userEntity;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SPECIALIZATION_ID")
+    private SpecialistEntity specialist;
 
     public DoctorEntity() {
     }
@@ -25,9 +40,6 @@ public class DoctorEntity {
         this.userEntity = userEntity;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
     public long getId() {
         return id;
     }
@@ -36,8 +48,6 @@ public class DoctorEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "NAME", nullable = false, length = 100)
     public String getName() {
         return name;
     }
@@ -46,8 +56,6 @@ public class DoctorEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "SURNAME", nullable = true, length = 100)
     public String getSurname() {
         return surname;
     }
@@ -56,14 +64,20 @@ public class DoctorEntity {
         this.surname = surname;
     }
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USER_ID")
     public UserEntity getUserEntity() {
         return userEntity;
     }
 
     public void setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
+    }
+
+    public SpecialistEntity getSpecialist() {
+        return specialist;
+    }
+
+    public void setSpecialist(SpecialistEntity specialist) {
+        this.specialist = specialist;
     }
 
     @Override

@@ -6,8 +6,11 @@
         <class>com.models.entity.PatientEntity</class>
         <class>com.models.entity.RecordEntity</class>
         <class>com.models.entity.PageEntity</class>
+        <class>com.models.RecordEntity</class>
+        <class>com.models.PageEntity</class>
+        <class>com.models.entity.SpecializationEntity</class>
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:h2:/home/nikolaimikhalyuk/Desktop/doctor-helper-server/doctor-helper-server-db"/>
+            <property name="hibernate.connection.url" value="jdbc:h2:D:/doctor-helper-server/doctor-helper-server-db"/>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
             <property name="hibernate.connection.username" value=""/>
             <property name="hibernate.connection.password" value=""/>

@@ -6,14 +6,35 @@ import java.util.Objects;
 @Entity
 @Table(name = "PATIENT")
 public class PatientEntity {
-    private long id;
-    private String name;
-    private String surname;
-    private RecordEntity record;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
+    private long id;
+
+    @Basic
+    @Column(name = "NAME", nullable = false, length = 255)
+    private String name;
+
+    @Basic
+    @Column(name = "SURNAME", nullable = false, length = 255)
+    private String surname;
+
+    @Basic
+    @Column(name = "TELEPHONE", length = 50)
+    private String telephone;
+
+    @Basic
+    @Column(name = "ADDRESS", length = 500)
+    private String address;
+
+    @Basic
+    @Column(name = "EMAIL", length =  100)
+    private String email;
+
+    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER, optional = false)
+    private RecordEntity record;
+
     public long getId() {
         return id;
     }
@@ -22,8 +43,6 @@ public class PatientEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "NAME")
     public String getName() {
         return name;
     }
@@ -32,8 +51,6 @@ public class PatientEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "SURNAME")
     public String getSurname() {
         return surname;
     }
@@ -42,8 +59,30 @@ public class PatientEntity {
         this.surname = surname;
     }
 
-    @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER, optional = false)
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public RecordEntity getRecord() {
         return record;
     }
