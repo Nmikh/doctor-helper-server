@@ -1,6 +1,7 @@
 package com.services;
 
 import com.DAO.PatientRepository;
+import com.DAO.RecordRepository;
 import com.models.entity.PatientEntity;
 import com.models.entity.RecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,19 @@ public class PatientService {
     @Autowired
     PatientRepository patientRepository;
 
-    public PatientEntity createPatient(PatientEntity patient){
+    @Autowired
+    RecordRepository recordRepository;
+
+    public Long createPatient(PatientEntity patient){
+
+        PatientEntity patientSave = patientRepository.save(patient);
 
         RecordEntity recordEntity = new RecordEntity();
+        recordEntity.setPatient(patientSave);
 
-        //recordEntity.setPatient(patient);
-        patient.setRecord(recordEntity);
+        recordRepository.save(recordEntity);
 
-        patientRepository.save(patient);
-
-        return patient;
+        return patientSave.getId();
     }
 
 
