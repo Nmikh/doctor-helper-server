@@ -31,8 +31,11 @@ public class PatientService {
     }
 
     public List<PatientEntity> getPatientByNameAndSurnameLike(String nameLike, String surnameLike){
-        return patientRepository.findByNameLikeAndSurnameLikeOrderBySurname(nameLike, surnameLike);
+        return patientRepository.findByNameContainingAndSurnameContainingOrderBySurname(nameLike, surnameLike);
     }
 
+    public List<PatientEntity> getAllPatients(){
+        return patientRepository.findAll();
+    }
 
 }

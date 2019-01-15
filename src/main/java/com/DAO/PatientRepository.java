@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
 
-    List<PatientEntity> findByNameLikeAndSurnameLikeOrderBySurname(
+    List<PatientEntity> findByNameContainingAndSurnameContainingOrderBySurname(
             String nameLike, String surnameLike);
+
+    List<PatientEntity> findAll();
 }

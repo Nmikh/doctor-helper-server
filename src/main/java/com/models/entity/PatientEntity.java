@@ -1,5 +1,7 @@
 package com.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -31,6 +33,7 @@ public class PatientEntity {
     @Column(name = "EMAIL", length =  100)
     private String email;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "patient", cascade = CascadeType.ALL,
             fetch = FetchType.EAGER, optional = false)
     private RecordEntity record;
