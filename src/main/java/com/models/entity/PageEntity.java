@@ -1,5 +1,6 @@
 package com.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -31,6 +32,8 @@ public class PageEntity {
     @Column(name = "ANSWER")
     private String answer;
 
+    @JsonFormat
+            (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Basic
     @Column(name = "PAGE_DATE")
     private Date date;

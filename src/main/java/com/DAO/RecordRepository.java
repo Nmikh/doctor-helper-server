@@ -10,4 +10,7 @@ public interface RecordRepository extends JpaRepository<RecordEntity, Long> {
 
     RecordRepository findByPatient(PatientEntity patientEntity);
 
+    @Override
+    RecordEntity getOne(Long id);;
+
 }

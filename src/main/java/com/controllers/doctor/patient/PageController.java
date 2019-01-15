@@ -1,9 +1,9 @@
 package com.controllers.doctor.patient;
 
 import com.models.entity.DoctorEntity;
-import com.models.entity.RecordEntity;
+import com.models.entity.PageEntity;
 import com.services.DoctorService;
-import com.services.RecordService;
+import com.services.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,26 +15,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.security.Principal;
 
 @Controller
-public class RecordController {
+public class PageController {
 
     @Autowired
-    RecordService recordService;
+    PageService pageService;
 
     @Autowired
     DoctorService doctorService;
 
-    @PostMapping("/change_record/{patient_id}")
-    public ResponseEntity createPatient(Principal principal,
-                                        @PathVariable("patient_id") Long patientId,
-                                        @RequestBody RecordEntity recordEntity) {
+    @PostMapping("/create_page/{record_id}")
+    public ResponseEntity createPage(Principal principal,
+                                        @PathVariable("record_id") Long recordId,
+                                        @RequestBody PageEntity pageEntity) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
             return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
         }
 
-        Long record = recordService.createRecord(patientId, recordEntity);
+        Long page = pageService.createPage(recordId, pageEntity, doctor);
 
-        return new ResponseEntity(record, HttpStatus.resolve(201));
+        return new ResponseEntity(page, HttpStatus.resolve(201));
     }
 }
