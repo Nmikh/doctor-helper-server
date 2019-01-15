@@ -1,5 +1,6 @@
 package com.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -32,6 +33,8 @@ public class RecordEntity {
     @Column(name = "SEX")
     private Boolean sex;
 
+    @JsonFormat
+            (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Basic
     @Column(name = "BIRTHDAY")
     private Date birthday;

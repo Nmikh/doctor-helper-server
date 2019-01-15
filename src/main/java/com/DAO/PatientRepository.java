@@ -13,4 +13,7 @@ public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
             String nameLike, String surnameLike);
 
     List<PatientEntity> findAll();
+
+    @Override
+    PatientEntity getOne(Long id);;
 }
