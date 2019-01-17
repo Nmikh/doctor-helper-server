@@ -29,9 +29,9 @@ public class PageService {
     PatientRepository patientRepository;
 
     public Long createPage(Long patientId, PageEntity pageEntity, DoctorEntity doctorEntity) {
-        PatientEntity patient = patientRepository.getOne(patientId);
+        PatientEntity patient = patientRepository.findById(patientId).get();
 
-        RecordEntity record = (RecordEntity) recordRepository.findByPatient(patient);
+        RecordEntity record = recordRepository.findByPatient(patient);
 
         pageEntity.setRecord(record);
         pageEntity.setDoctor(doctorEntity);
@@ -56,6 +56,7 @@ public class PageService {
 
         page.setTheme(pageEntity.getTheme());
         page.setDescription(pageEntity.getDescription());
+        page.setParameters(pageEntity.getParameters());
         page.setAnswer(pageEntity.getAnswer());
         page.setDate(pageEntity.getDate());
 

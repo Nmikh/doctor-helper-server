@@ -10,8 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 public interface RecordRepository extends JpaRepository<RecordEntity, Long> {
 
     @Transactional(readOnly = true)
-    RecordRepository findByPatient(PatientEntity patientEntity);
+    RecordEntity findByPatient(PatientEntity patientEntity);
 
+    @Transactional(readOnly = true)
     @Override
     RecordEntity getOne(Long id);
 
