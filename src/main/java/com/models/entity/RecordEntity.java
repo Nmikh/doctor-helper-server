@@ -44,6 +44,7 @@ public class RecordEntity {
     @JoinColumn(name = "PATIENT_ID")
     private PatientEntity patient;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "record", fetch = FetchType.EAGER)
     private List<PageEntity> pages;
 

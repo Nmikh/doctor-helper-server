@@ -16,7 +16,7 @@ public class RecordService {
     @Autowired
     PatientRepository patientRepository;
 
-    public Long createRecord(Long patientId, RecordEntity recordEntity){
+    public void createRecord(Long patientId, RecordEntity recordEntity){
         PatientEntity patient = patientRepository.getOne(patientId);
 
         RecordEntity record = patient.getRecord();
@@ -28,7 +28,11 @@ public class RecordService {
         record.setSex(recordEntity.getSex());
 
         recordRepository.save(record);
+    }
 
-        return record.getId();
+    public RecordEntity findRecordByPatientId(Long patientId){
+        PatientEntity patient = patientRepository.getOne(patientId);
+
+        return patient.getRecord();
     }
 }
