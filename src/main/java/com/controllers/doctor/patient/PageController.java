@@ -21,7 +21,7 @@ public class PageController {
     @Autowired
     DoctorService doctorService;
 
-    @PostMapping("/create_page/{patient_id}")
+    @PostMapping("/doctor-system/doctor/page/{patient_id}")
     public ResponseEntity createPage(Principal principal,
                                      @PathVariable("patient_id") Long patientId,
                                      @RequestBody PageEntity pageEntity) {
@@ -36,8 +36,8 @@ public class PageController {
         return new ResponseEntity(page, HttpStatus.resolve(201));
     }
 
-    @GetMapping("/read_page/{page_id}")
-    public ResponseEntity readPage(Principal principal, @PathVariable("page_id") Long pageId) {
+    @GetMapping("/doctor-system/doctor/page/{page_id}")
+    public ResponseEntity getPage(Principal principal, @PathVariable("page_id") Long pageId) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
@@ -47,7 +47,19 @@ public class PageController {
         return new ResponseEntity(pageService.readPage(pageId), HttpStatus.OK);
     }
 
-    @PostMapping("/update_page/{page_id}")
+    @GetMapping("/doctor-system/doctor/page/{patient_id}/all")
+    public ResponseEntity getAllPages(Principal principal, @PathVariable("patient_id") Long patientId) {
+        DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
+
+        if (doctor == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(pageService.getAllPages(patientId), HttpStatus.OK);
+    }
+
+
+    @PutMapping("/doctor-system/doctor/page/{page_id}")
     public ResponseEntity updatePage(Principal principal,
                                      @PathVariable("page_id") Long pageId,
                                      @RequestBody PageEntity pageEntity) {
@@ -65,7 +77,7 @@ public class PageController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/delete_page/{page_id}")
+    @DeleteMapping("/doctor-system/doctor/page/{page_id}")
     public ResponseEntity deletePage(Principal principal, @PathVariable("page_id") Long pageId) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 

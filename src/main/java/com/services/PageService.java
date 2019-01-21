@@ -11,6 +11,7 @@ import com.models.entity.RecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,7 @@ public class PageService {
     public Long createPage(Long patientId, PageEntity pageEntity, DoctorEntity doctorEntity) {
         PatientEntity patient = patientRepository.findById(patientId).get();
 
-        RecordEntity record = recordRepository.findByPatient(patient);
+        RecordEntity record = patient.getRecord();
 
         pageEntity.setRecord(record);
         pageEntity.setDoctor(doctorEntity);
@@ -76,5 +77,10 @@ public class PageService {
         pageRepository.delete(page);
 
         return true;
+    }
+
+    public List<PageEntity> getAllPages(Long patientId) {
+        PatientEntity patientEntity = patientRepository.findById(patientId).get();
+        return patientEntity.getRecord().getPages();
     }
 }
