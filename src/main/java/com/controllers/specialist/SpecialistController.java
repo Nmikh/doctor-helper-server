@@ -20,7 +20,7 @@ public class SpecialistController {
     @Autowired
     SpecialistService specialistService;
 
-    @PostMapping("/doctor-system/specialist/specialist_registration")
+    @PostMapping("/doctor-system/specialist/registration")
     public ResponseEntity registrationSpecialist(
             @RequestBody Specialist specialist) {
         boolean result = specialistService.registerSpecialist(specialist);
@@ -31,7 +31,7 @@ public class SpecialistController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/doctor-system/specialist/specialist_auth")
+    @GetMapping("/doctor-system/specialist/authorization")
     public ResponseEntity authSpecialist(Principal principal) {
 
         SpecialistEntity specialist = specialistService.findSpecialistByLogin(principal.getName());
