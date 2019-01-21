@@ -46,4 +46,23 @@ public class DoctorService {
         UserEntity user = userRepository.findByLogin(login);
         return doctorRepository.findByUserEntity(user);
     }
+
+    public void changePassword(DoctorEntity doctor, String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        UserEntity userEntity = doctor.getUserEntity();
+        userEntity.setPassword(passwordEncoder.encode(password));
+
+        userRepository.save(userEntity);
+    }
+
+    public void changeDoctor(DoctorEntity doctor, DoctorEntity doctorEntity, Long specializationId){
+        SpecializationEntity specialization = specializationRepository.getOne(specializationId);
+
+        doctor.setName(doctorEntity.getName());
+        doctor.setSurname(doctorEntity.getSurname());
+        doctor.setSpecialization(specialization);
+
+        doctorRepository.save(doctor);
+    }
 }
