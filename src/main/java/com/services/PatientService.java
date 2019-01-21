@@ -18,7 +18,7 @@ public class PatientService {
     @Autowired
     RecordRepository recordRepository;
 
-    public Long createPatient(PatientEntity patient){
+    public Long createPatient(PatientEntity patient) {
 
         PatientEntity patientSave = patientRepository.save(patient);
 
@@ -30,12 +30,28 @@ public class PatientService {
         return patientSave.getId();
     }
 
-    public List<PatientEntity> getPatientByNameAndSurnameLike(String nameLike, String surnameLike){
+    public List<PatientEntity> getPatientByNameAndSurnameLike(String nameLike, String surnameLike) {
         return patientRepository.findByNameContainingAndSurnameContainingOrderBySurname(nameLike, surnameLike);
     }
 
-    public List<PatientEntity> getAllPatients(){
+    public List<PatientEntity> getAllPatients() {
         return patientRepository.findAll();
+    }
+
+    public PatientEntity getPatient(Long patientId) {
+        return patientRepository.findById(patientId).get();
+    }
+
+    public void changePatient(Long patientId, PatientEntity patientEntity){
+        PatientEntity patient = patientRepository.findById(patientId).get();
+
+        patient.setName(patientEntity.getName());
+        patient.setSurname(patientEntity.getSurname());
+        patient.setAddress(patientEntity.getAddress());
+        patient.setTelephone(patientEntity.getTelephone());
+        patient.setEmail(patientEntity.getEmail());
+
+        patientRepository.save(patient);
     }
 
 }

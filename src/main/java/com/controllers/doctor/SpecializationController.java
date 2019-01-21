@@ -15,7 +15,6 @@ public class SpecializationController {
 
     @GetMapping("/specializations")
     public ResponseEntity authDoctor() {
-        return new ResponseEntity(specializationService.getAllSpecializations(),
-                HttpStatus.OK);
+        return new ResponseEntity(specializationService.getAllSpecializations(), HttpStatus.OK);
     }
 }

@@ -22,12 +22,12 @@ public class PatientController {
     @Autowired
     DoctorService doctorService;
 
-    @PostMapping("/create_patient")
+    @PostMapping("/doctor-system/doctor/patient")
     public ResponseEntity createPatient(Principal principal, @RequestBody PatientEntity patient) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
-            return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         Long patientId = patientService.createPatient(patient);
@@ -35,14 +35,25 @@ public class PatientController {
         return new ResponseEntity(patientId, HttpStatus.resolve(201));
     }
 
-    @GetMapping("/find_patient_like_name_surname")
+    @GetMapping("/doctor-system/doctor/patient/{patient_id}")
+    public ResponseEntity findPatientByID(Principal principal, @PathVariable("patient_id") Long patientId) {
+        DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
+
+        if (doctor == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(patientService.getPatient(patientId), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/doctor/patient/params")
     public ResponseEntity findPatientByNameAndSurnameLike(Principal principal,
                                                           @RequestParam("name") String name,
                                                           @RequestParam("surname") String surname) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
-            return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         List<PatientEntity> patientByNameAndSurnameLike = patientService.getPatientByNameAndSurnameLike(name, surname);
@@ -50,16 +61,31 @@ public class PatientController {
         return new ResponseEntity(patientByNameAndSurnameLike, HttpStatus.OK);
     }
 
-    @GetMapping("/get_all_patients")
+    @GetMapping("/doctor-system/doctor/patient/all")
     public ResponseEntity getAllPatients(Principal principal) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
-            return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         List<PatientEntity> patientByNameAndSurnameLike = patientService.getAllPatients();
 
         return new ResponseEntity(patientByNameAndSurnameLike, HttpStatus.OK);
+    }
+
+    @PutMapping("/doctor-system/doctor/patient/{patient_id}")
+    public ResponseEntity changePatient(Principal principal,
+                                        @RequestBody PatientEntity patientEntity,
+                                        @PathVariable("patient_id") Long patientId) {
+        DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
+
+        if (doctor == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        patientService.changePatient(patientId, patientEntity);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

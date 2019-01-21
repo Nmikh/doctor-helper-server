@@ -28,7 +28,7 @@ public class PageController {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
-            return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         Long page = pageService.createPage(patientId, pageEntity, doctor);
@@ -41,7 +41,7 @@ public class PageController {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
-            return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         return new ResponseEntity(pageService.readPage(pageId), HttpStatus.OK);
@@ -54,7 +54,7 @@ public class PageController {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
-            return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         boolean answer = pageService.updatePage(pageId, pageEntity, doctor);
@@ -70,7 +70,7 @@ public class PageController {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
-            return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         boolean answer = pageService.deletePage(pageId, doctor);

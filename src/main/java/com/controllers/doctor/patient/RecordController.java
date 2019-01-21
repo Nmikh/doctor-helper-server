@@ -30,7 +30,7 @@ public class RecordController {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
-            return new ResponseEntity(doctor, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
         Long record = recordService.createRecord(patientId, recordEntity);
