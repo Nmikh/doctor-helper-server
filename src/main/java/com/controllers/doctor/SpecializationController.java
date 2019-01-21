@@ -13,7 +13,7 @@ public class SpecializationController {
     @Autowired
     SpecializationService specializationService;
 
-    @GetMapping("/specializations")
+    @GetMapping("/doctor-system/doctor/specializations")
     public ResponseEntity authDoctor() {
         return new ResponseEntity(specializationService.getAllSpecializations(), HttpStatus.OK);
     }
