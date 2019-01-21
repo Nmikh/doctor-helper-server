@@ -38,4 +38,20 @@ public class SpecialistService {
         UserEntity user = userRepository.findByLogin(login);
         return specialistRepository.findByUserEntity(user);
     }
+
+    public void changePassword(SpecialistEntity specialist, String password){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        UserEntity userEntity = specialist.getUserEntity();
+        userEntity.setPassword(passwordEncoder.encode(password));
+
+        userRepository.save(userEntity);
+    }
+
+    public void changeSpecialist(SpecialistEntity specialist, SpecialistEntity specialistEntity){
+        specialist.setName(specialistEntity.getName());
+        specialist.setSurname(specialistEntity.getSurname());
+
+        specialistRepository.save(specialist);
+    }
 }
