@@ -1,5 +1,6 @@
 package com.controllers.doctor.patient;
 
+import com.models.PatientPageReturn;
 import com.models.entity.DoctorEntity;
 import com.models.entity.PatientEntity;
 import com.services.DoctorService;
@@ -61,6 +62,21 @@ public class PatientController {
         return new ResponseEntity(patientByNameAndSurnameLike, HttpStatus.OK);
     }
 
+    @GetMapping("/doctor-system/doctor/patient/params/{page}")
+    public ResponseEntity findPatientsPageByNameAndSurnameLike(Principal principal, @PathVariable("page") int page,
+                                                               @RequestParam("name") String name,
+                                                               @RequestParam("surname") String surname) {
+        DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
+
+        if (doctor == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        PatientPageReturn patients = patientService.getPatientsPageByNameAndSurnameLike(name, surname, page);
+
+        return new ResponseEntity(patients, HttpStatus.OK);
+    }
+
     @GetMapping("/doctor-system/doctor/patient/all")
     public ResponseEntity getAllPatients(Principal principal) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
@@ -72,6 +88,17 @@ public class PatientController {
         List<PatientEntity> patientByNameAndSurnameLike = patientService.getAllPatients();
 
         return new ResponseEntity(patientByNameAndSurnameLike, HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/doctor/patient/all/{page}")
+    public ResponseEntity getAllPatientsPage(Principal principal, @PathVariable("page") int page) {
+        DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
+
+        if (doctor == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(patientService.getPageOfPatients(page), HttpStatus.OK);
     }
 
     @PutMapping("/doctor-system/doctor/patient/{patient_id}")

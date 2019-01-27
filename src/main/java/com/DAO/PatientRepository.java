@@ -12,11 +12,11 @@ import java.util.Optional;
 public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
 
     @Transactional(readOnly = true)
-    List<PatientEntity> findByNameContainingAndSurnameContainingOrderBySurname(
+    List<PatientEntity> findByNameContainingAndSurnameContainingOrderBySurnameAscNameAsc(
             String nameLike, String surnameLike);
 
     @Transactional(readOnly = true)
-    List<PatientEntity> findAll();
+    List<PatientEntity> findAllByOrderBySurnameAscNameAsc();
 
     @Transactional(readOnly = true)
     @Override
