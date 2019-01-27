@@ -58,6 +58,19 @@ public class PageController {
         return new ResponseEntity(pageService.getAllPages(patientId), HttpStatus.OK);
     }
 
+    @GetMapping("/doctor-system/doctor/page/{patient_id}/all/{page}")
+    public ResponseEntity getAllPagesPage(Principal principal,
+                                          @PathVariable("patient_id") Long patientId,
+                                          @PathVariable("page") int page) {
+        DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
+
+        if (doctor == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(pageService.getAllPagesPage(patientId, page), HttpStatus.OK);
+    }
+
 
     @PutMapping("/doctor-system/doctor/page/{page_id}")
     public ResponseEntity updatePage(Principal principal,

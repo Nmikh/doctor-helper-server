@@ -1,14 +1,14 @@
 package com.services;
 
-import com.DAO.DoctorRepository;
-import com.DAO.PageRepository;
-import com.DAO.PatientRepository;
-import com.DAO.RecordRepository;
+import com.DAO.*;
+import com.models.PagesPageReturn;
 import com.models.entity.DoctorEntity;
 import com.models.entity.PageEntity;
 import com.models.entity.PatientEntity;
 import com.models.entity.RecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @Service
 public class PageService {
+    private final static int OBJECTS_ON_PAGE = 2;
 
     @Autowired
     PageRepository pageRepository;
@@ -28,6 +29,9 @@ public class PageService {
 
     @Autowired
     PatientRepository patientRepository;
+
+    @Autowired
+    PagePaginationRepository pagePaginationRepository;
 
     public Long createPage(Long patientId, PageEntity pageEntity, DoctorEntity doctorEntity) {
         PatientEntity patient = patientRepository.findById(patientId).get();
@@ -81,6 +85,17 @@ public class PageService {
 
     public List<PageEntity> getAllPages(Long patientId) {
         PatientEntity patientEntity = patientRepository.findById(patientId).get();
-        return patientEntity.getRecord().getPages();
+
+        return pageRepository.findByRecordOrderByDateDesc(patientEntity.getRecord());
+    }
+
+    public PagesPageReturn getAllPagesPage(Long patientId, int page) {
+        PatientEntity patientEntity = patientRepository.findById(patientId).get();
+
+        Page<PageEntity> pagesPage =
+                pagePaginationRepository.findByRecordOrderByDateDesc(
+                        patientEntity.getRecord(), new PageRequest(--page, OBJECTS_ON_PAGE));
+
+        return new PagesPageReturn(pagesPage.getTotalPages(), pagesPage.getContent());
     }
 }
