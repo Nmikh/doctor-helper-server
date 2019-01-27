@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 public class PageService {
-    private final static int OBJECTS_ON_PAGE = 2;
+    private final static int OBJECTS_ON_PAGE = 10;
 
     @Autowired
     PageRepository pageRepository;
