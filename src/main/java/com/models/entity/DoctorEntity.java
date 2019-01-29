@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "DOCTOR")
 public class DoctorEntity {
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
