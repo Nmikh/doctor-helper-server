@@ -21,7 +21,7 @@ import java.security.Principal;
 * 3. Change Dataset @PutMapping("/doctor-system/specialist/dataset/{dataset_id}") +
 * 4. Get Dataset by ID @GetMapping("/doctor-system/specialist/dataset/{dataset_id}")
 * 5. Get All Datasets @GetMapping("/doctor-system/specialist/dataset/all")
-* 6. Activation Dataset @PutMapping("/doctor-system/specialist/dataset/{dataset_id}/activate")
+* 6. Activation Dataset @PutMapping("/doctor-system/specialist/dataset/{dataset_id}/activate") +
 * */
 @Controller
 public class DataSetController {
@@ -58,4 +58,20 @@ public class DataSetController {
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
+
+    @PutMapping("/doctor-system/specialist/dataset/{dataset_id}/activate")
+    public ResponseEntity activateDataSet(Principal principal,
+                                        @RequestBody Boolean dataSetActivate,
+                                        @PathVariable("dataset_id") Long dataSetId) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        if (dataSetService.activateDataSet(specialistEntity, dataSetId, dataSetActivate)) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
 }

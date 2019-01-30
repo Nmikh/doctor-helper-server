@@ -11,19 +11,19 @@ public class DataSetService {
     @Autowired
     DataSetRepository dataSetRepository;
 
-    public Long createDataSet(DatasetEntity datasetEntity, SpecialistEntity specialistEntity){
+    public Long createDataSet(DatasetEntity datasetEntity, SpecialistEntity specialistEntity) {
         datasetEntity.setActive(false);
         datasetEntity.setSpecialistEntity(specialistEntity);
 
         DatasetEntity dataSetSave = dataSetRepository.save(datasetEntity);
 
-        return  dataSetSave.getId();
+        return dataSetSave.getId();
     }
 
-    public boolean changeDataSet(DatasetEntity datasetEntity,SpecialistEntity specialistEntity ,Long dataSetId){
+    public boolean changeDataSet(DatasetEntity datasetEntity, SpecialistEntity specialistEntity, Long dataSetId) {
         DatasetEntity dataSet = dataSetRepository.findById(dataSetId).get();
 
-        if(specialistEntity.getId()!=dataSet.getSpecialistEntity().getId()){
+        if (specialistEntity.getId() != dataSet.getSpecialistEntity().getId()) {
             return false;
         }
 
@@ -34,4 +34,16 @@ public class DataSetService {
         return true;
     }
 
+    public boolean activateDataSet(SpecialistEntity specialistEntity, Long dataSetId, Boolean dataSetActivate) {
+        DatasetEntity dataSet = dataSetRepository.findById(dataSetId).get();
+
+        if (specialistEntity.getId() != dataSet.getSpecialistEntity().getId()) {
+            return false;
+        }
+
+        dataSet.setActive(dataSetActivate);
+
+        dataSetRepository.save(dataSet);
+        return true;
+    }
 }
