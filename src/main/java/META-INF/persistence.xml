@@ -15,6 +15,7 @@
         <class>com.models.entity.specialist.DatasetObjectsEntity</class>
         <class>com.models.entity.specialist.SvmKernelParametrsEntity</class>
         <class>com.models.entity.specialist.DatasetConfigurationEntity</class>
+        <class>com.models.entity.specialist.DatasetConfigurationMagazineEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:h2:/home/nikolaimikhalyuk/Desktop/doctor-helper-server/doctor-helper-server-db"/>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
