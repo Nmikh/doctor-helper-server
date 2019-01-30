@@ -1,6 +1,6 @@
 package com.models;
 
-import com.models.entity.PatientEntity;
+import com.models.entity.doctor.PatientEntity;
 
 import java.util.List;
 

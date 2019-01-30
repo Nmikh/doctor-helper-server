@@ -1,4 +1,4 @@
-package com.models.entity;
+package com.models.entity.doctor;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "RECORD")

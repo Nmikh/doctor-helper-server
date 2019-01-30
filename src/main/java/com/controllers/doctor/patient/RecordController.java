@@ -1,7 +1,7 @@
 package com.controllers.doctor.patient;
 
-import com.models.entity.DoctorEntity;
-import com.models.entity.RecordEntity;
+import com.models.entity.doctor.DoctorEntity;
+import com.models.entity.doctor.RecordEntity;
 import com.services.DoctorService;
 import com.services.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;

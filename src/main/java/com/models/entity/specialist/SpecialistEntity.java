@@ -1,6 +1,7 @@
-package com.models.entity;
+package com.models.entity.specialist;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.models.entity.UserEntity;
 
 import javax.persistence.*;
 

@@ -1,6 +1,6 @@
 package com.DAO;
 
-import com.models.entity.SpecializationEntity;
+import com.models.entity.doctor.SpecializationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,6 @@
 package com.models;
 
-import com.models.entity.PageEntity;
+import com.models.entity.doctor.PageEntity;
 
 import java.util.List;
 

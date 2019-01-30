@@ -1,4 +1,4 @@
-package com.models.entity;
+package com.models.entity.doctor;
 
 import javax.persistence.*;
 

@@ -1,7 +1,7 @@
 package com.controllers.specialist;
 
 import com.models.Specialist;
-import com.models.entity.SpecialistEntity;
+import com.models.entity.specialist.SpecialistEntity;
 import com.services.SpecialistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

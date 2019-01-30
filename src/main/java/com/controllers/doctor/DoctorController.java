@@ -1,7 +1,7 @@
 package com.controllers.doctor;
 
 import com.models.Doctor;
-import com.models.entity.DoctorEntity;
+import com.models.entity.doctor.DoctorEntity;
 import com.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

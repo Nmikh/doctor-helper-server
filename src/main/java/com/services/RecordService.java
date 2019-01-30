@@ -2,8 +2,8 @@ package com.services;
 
 import com.DAO.PatientRepository;
 import com.DAO.RecordRepository;
-import com.models.entity.PatientEntity;
-import com.models.entity.RecordEntity;
+import com.models.entity.doctor.PatientEntity;
+import com.models.entity.doctor.RecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

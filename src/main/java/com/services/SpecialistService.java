@@ -3,7 +3,7 @@ package com.services;
 import com.DAO.SpecialistRepository;
 import com.DAO.UserRepository;
 import com.models.Specialist;
-import com.models.entity.SpecialistEntity;
+import com.models.entity.specialist.SpecialistEntity;
 import com.models.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

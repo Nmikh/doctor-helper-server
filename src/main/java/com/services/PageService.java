@@ -2,10 +2,10 @@ package com.services;
 
 import com.DAO.*;
 import com.models.PagesPageReturn;
-import com.models.entity.DoctorEntity;
-import com.models.entity.PageEntity;
-import com.models.entity.PatientEntity;
-import com.models.entity.RecordEntity;
+import com.models.entity.doctor.DoctorEntity;
+import com.models.entity.doctor.PageEntity;
+import com.models.entity.doctor.PatientEntity;
+import com.models.entity.doctor.RecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

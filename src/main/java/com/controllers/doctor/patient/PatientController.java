@@ -1,8 +1,8 @@
 package com.controllers.doctor.patient;
 
 import com.models.PatientPageReturn;
-import com.models.entity.DoctorEntity;
-import com.models.entity.PatientEntity;
+import com.models.entity.doctor.DoctorEntity;
+import com.models.entity.doctor.PatientEntity;
 import com.services.DoctorService;
 import com.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
