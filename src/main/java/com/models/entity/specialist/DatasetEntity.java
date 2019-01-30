@@ -25,7 +25,7 @@ public class DatasetEntity {
     @Column(name = "ACTIVE")
     private Boolean active;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SPECIALIST_ID")
     private SpecialistEntity specialistEntity;
 
