@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.doctor;
 
 import com.models.entity.doctor.DoctorEntity;
 import com.models.entity.UserEntity;

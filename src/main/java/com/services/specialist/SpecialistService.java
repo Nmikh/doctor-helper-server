@@ -1,6 +1,6 @@
-package com.services;
+package com.services.specialist;
 
-import com.DAO.SpecialistRepository;
+import com.DAO.specialist.SpecialistRepository;
 import com.DAO.UserRepository;
 import com.models.Specialist;
 import com.models.entity.specialist.SpecialistEntity;

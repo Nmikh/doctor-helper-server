@@ -1,7 +1,7 @@
-package com.services;
+package com.services.doctor;
 
-import com.DAO.PatientRepository;
-import com.DAO.RecordRepository;
+import com.DAO.doctor.PatientRepository;
+import com.DAO.doctor.RecordRepository;
 import com.models.entity.doctor.PatientEntity;
 import com.models.entity.doctor.RecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;

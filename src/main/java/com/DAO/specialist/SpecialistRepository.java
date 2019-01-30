@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.specialist;
 
 import com.models.entity.specialist.SpecialistEntity;
 import com.models.entity.UserEntity;
@@ -11,4 +11,6 @@ public interface SpecialistRepository extends JpaRepository<SpecialistEntity, Lo
 
     @Transactional(readOnly = true)
     SpecialistEntity findByUserEntity(UserEntity userEntity);
+
+
 }

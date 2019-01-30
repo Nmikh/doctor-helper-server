@@ -1,6 +1,6 @@
-package com.services;
+package com.services.doctor;
 
-import com.DAO.*;
+import com.DAO.doctor.*;
 import com.models.PagesPageReturn;
 import com.models.entity.doctor.DoctorEntity;
 import com.models.entity.doctor.PageEntity;

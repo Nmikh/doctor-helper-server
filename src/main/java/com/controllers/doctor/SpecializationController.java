@@ -1,6 +1,6 @@
 package com.controllers.doctor;
 
-import com.services.SpecializationService;
+import com.services.doctor.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

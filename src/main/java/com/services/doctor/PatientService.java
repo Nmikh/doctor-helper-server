@@ -1,8 +1,8 @@
-package com.services;
+package com.services.doctor;
 
-import com.DAO.PatientPaginationRepository;
-import com.DAO.PatientRepository;
-import com.DAO.RecordRepository;
+import com.DAO.doctor.PatientPaginationRepository;
+import com.DAO.doctor.PatientRepository;
+import com.DAO.doctor.RecordRepository;
 import com.models.PatientPageReturn;
 import com.models.entity.doctor.PatientEntity;
 import com.models.entity.doctor.RecordEntity;

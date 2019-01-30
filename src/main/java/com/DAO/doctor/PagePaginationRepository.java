@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.doctor;
 
 import com.models.entity.doctor.PageEntity;
 import com.models.entity.doctor.RecordEntity;

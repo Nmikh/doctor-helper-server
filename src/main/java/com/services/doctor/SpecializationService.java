@@ -1,6 +1,6 @@
-package com.services;
+package com.services.doctor;
 
-import com.DAO.SpecializationRepository;
+import com.DAO.doctor.SpecializationRepository;
 import com.models.entity.doctor.SpecializationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

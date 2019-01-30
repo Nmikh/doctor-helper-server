@@ -2,8 +2,8 @@ package com.controllers.doctor.patient;
 
 import com.models.entity.doctor.DoctorEntity;
 import com.models.entity.doctor.RecordEntity;
-import com.services.DoctorService;
-import com.services.RecordService;
+import com.services.doctor.DoctorService;
+import com.services.doctor.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

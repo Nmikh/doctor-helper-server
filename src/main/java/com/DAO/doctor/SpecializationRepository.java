@@ -1,4 +1,4 @@
-package com.DAO;
+package com.DAO.doctor;
 
 import com.models.entity.doctor.SpecializationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
