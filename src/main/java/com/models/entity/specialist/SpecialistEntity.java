@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "SPECIALIST")
 public class SpecialistEntity {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)

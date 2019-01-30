@@ -10,6 +10,7 @@
         <class>com.models.PageEntity</class>
         <class>com.models.entity.doctor.SpecializationEntity</class>
         <class>com.models.entity.DatasetMethodsTypeEntity</class>
+        <class>com.models.entity.specialist.DatasetEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:h2:/home/nikolaimikhalyuk/Desktop/doctor-helper-server/doctor-helper-server-db"/>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
