@@ -14,7 +14,7 @@ import java.security.Principal;
 
 /*
  * 1. Create dataset @PostMapping("/doctor-system/specialist/dataset") +
- * 2. Delete Dataset @DeleteMapping("/doctor-system/specialist/dataset")
+ * 2. Delete Dataset @DeleteMapping("/doctor-system/specialist/dataset/{dataset_id}")
  * 3. Change Dataset @PutMapping("/doctor-system/specialist/dataset/{dataset_id}") +
  * 4. Get Dataset by ID @GetMapping("/doctor-system/specialist/dataset/{dataset_id}") +
  * 5. Get All Datasets @GetMapping("/doctor-system/specialist/dataset/all") +
