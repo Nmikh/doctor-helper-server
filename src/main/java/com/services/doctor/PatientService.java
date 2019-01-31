@@ -3,7 +3,7 @@ package com.services.doctor;
 import com.DAO.doctor.PatientPaginationRepository;
 import com.DAO.doctor.PatientRepository;
 import com.DAO.doctor.RecordRepository;
-import com.models.PatientPageReturn;
+import com.models.doctor.PatientPageReturn;
 import com.models.entity.doctor.PatientEntity;
 import com.models.entity.doctor.RecordEntity;
 import org.springframework.beans.factory.annotation.Autowired;

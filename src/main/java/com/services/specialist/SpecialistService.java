@@ -2,7 +2,7 @@ package com.services.specialist;
 
 import com.DAO.specialist.SpecialistRepository;
 import com.DAO.UserRepository;
-import com.models.Specialist;
+import com.models.specialist.Specialist;
 import com.models.entity.specialist.SpecialistEntity;
 import com.models.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;

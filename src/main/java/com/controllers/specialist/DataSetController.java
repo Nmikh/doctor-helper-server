@@ -8,21 +8,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
 /*
-* 1. Create dataset @PostMapping("/doctor-system/specialist/dataset") +
-* 2. Delete Dataset @DeleteMapping("/doctor-system/specialist/dataset")
-* 3. Change Dataset @PutMapping("/doctor-system/specialist/dataset/{dataset_id}") +
-* 4. Get Dataset by ID @GetMapping("/doctor-system/specialist/dataset/{dataset_id}")
-* 5. Get All Datasets @GetMapping("/doctor-system/specialist/dataset/all")
-* 6. Activation Dataset @PutMapping("/doctor-system/specialist/dataset/{dataset_id}/activate") +
-* */
+ * 1. Create dataset @PostMapping("/doctor-system/specialist/dataset") +
+ * 2. Delete Dataset @DeleteMapping("/doctor-system/specialist/dataset")
+ * 3. Change Dataset @PutMapping("/doctor-system/specialist/dataset/{dataset_id}") +
+ * 4. Get Dataset by ID @GetMapping("/doctor-system/specialist/dataset/{dataset_id}") +
+ * 5. Get All Datasets @GetMapping("/doctor-system/specialist/dataset/all") +
+ * 6. Get All Datasets Page @GetMapping("/doctor-system/specialist/dataset/all/{page}") +
+ * 6. Get Specialist All Datasets @GetMapping("/doctor-system/specialist/dataset/all") +
+ * 7. Get Specialist All Datasets Page @GetMapping("/doctor-system/specialist/dataset/all/{page} +
+ * 8. Activation Dataset @PutMapping("/doctor-system/specialist/dataset/{dataset_id}/activate +
+ * */
 @Controller
 public class DataSetController {
 
@@ -44,6 +44,57 @@ public class DataSetController {
         return new ResponseEntity(dataSetId, HttpStatus.resolve(201));
     }
 
+    @GetMapping("/doctor-system/specialist/dataset/{dataset_id}")
+    public ResponseEntity getDataSetById(Principal principal,
+                                         @PathVariable("dataset_id") Long dataSetId) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(dataSetService.getDataSetById(dataSetId), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/specialist/dataset/all")
+    public ResponseEntity getDataSetAll(Principal principal) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(dataSetService.getDataSetAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/specialist/dataset/all/{page}")
+    public ResponseEntity getDataSetAllPage(Principal principal, @PathVariable("page") int page) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(dataSetService.getDataSetAllPage(page), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/specialist/dataset/all/specialist")
+    public ResponseEntity getSpecialistDataSetAll(Principal principal) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(dataSetService.getSpecialistDataSetAll(specialistEntity), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/specialist/dataset/all/{page}/specialist")
+    public ResponseEntity getSpecialistDataSetAllPage(Principal principal, @PathVariable("page") int page) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(dataSetService.getSpecialistDataSetAllPage(specialistEntity,page), HttpStatus.OK);
+    }
+
     @PutMapping("/doctor-system/specialist/dataset/{dataset_id}")
     public ResponseEntity changeDataSet(Principal principal,
                                         @RequestBody DatasetEntity datasetEntity,
@@ -61,8 +112,8 @@ public class DataSetController {
 
     @PutMapping("/doctor-system/specialist/dataset/{dataset_id}/activate")
     public ResponseEntity activateDataSet(Principal principal,
-                                        @RequestBody Boolean dataSetActivate,
-                                        @PathVariable("dataset_id") Long dataSetId) {
+                                          @RequestBody Boolean dataSetActivate,
+                                          @PathVariable("dataset_id") Long dataSetId) {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
         if (specialistEntity == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);

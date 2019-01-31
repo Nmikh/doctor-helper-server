@@ -1,6 +1,6 @@
 package com.controllers.doctor;
 
-import com.models.Doctor;
+import com.models.doctor.Doctor;
 import com.models.entity.doctor.DoctorEntity;
 import com.services.doctor.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;

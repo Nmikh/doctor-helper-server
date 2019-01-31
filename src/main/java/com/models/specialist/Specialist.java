@@ -1,4 +1,4 @@
-package com.models;
+package com.models.specialist;
 
 public class Specialist {
     private String name;

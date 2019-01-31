@@ -3,7 +3,7 @@ package com.services.doctor;
 import com.DAO.doctor.DoctorRepository;
 import com.DAO.doctor.SpecializationRepository;
 import com.DAO.UserRepository;
-import com.models.Doctor;
+import com.models.doctor.Doctor;
 import com.models.entity.doctor.DoctorEntity;
 import com.models.entity.doctor.SpecializationEntity;
 import com.models.entity.UserEntity;

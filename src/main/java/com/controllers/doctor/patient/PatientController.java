@@ -1,6 +1,6 @@
 package com.controllers.doctor.patient;
 
-import com.models.PatientPageReturn;
+import com.models.doctor.PatientPageReturn;
 import com.models.entity.doctor.DoctorEntity;
 import com.models.entity.doctor.PatientEntity;
 import com.services.doctor.DoctorService;

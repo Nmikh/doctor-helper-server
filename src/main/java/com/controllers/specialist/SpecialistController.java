@@ -1,6 +1,6 @@
 package com.controllers.specialist;
 
-import com.models.Specialist;
+import com.models.specialist.Specialist;
 import com.models.entity.specialist.SpecialistEntity;
 import com.services.specialist.SpecialistService;
 import org.springframework.beans.factory.annotation.Autowired;

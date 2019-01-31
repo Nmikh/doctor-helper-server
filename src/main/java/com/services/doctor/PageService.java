@@ -1,7 +1,7 @@
 package com.services.doctor;
 
 import com.DAO.doctor.*;
-import com.models.PagesPageReturn;
+import com.models.doctor.PagesPageReturn;
 import com.models.entity.doctor.DoctorEntity;
 import com.models.entity.doctor.PageEntity;
 import com.models.entity.doctor.PatientEntity;

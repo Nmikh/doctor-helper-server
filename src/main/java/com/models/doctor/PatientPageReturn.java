@@ -1,4 +1,4 @@
-package com.models;
+package com.models.doctor;
 
 import com.models.entity.doctor.PatientEntity;
 

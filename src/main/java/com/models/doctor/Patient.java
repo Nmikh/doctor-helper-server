@@ -1,4 +1,4 @@
-package com.models;
+package com.models.doctor;
 
 import java.util.Objects;
 
