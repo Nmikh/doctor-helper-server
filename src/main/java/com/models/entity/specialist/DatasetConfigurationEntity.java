@@ -55,6 +55,10 @@ public class DatasetConfigurationEntity {
     @JoinColumn(name = "DATASET_ID")
     private DatasetEntity datasetEntity;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SPECIALIST_ID")
+    private SpecialistEntity specialistEntity;
+
     public long getId() {
         return id;
     }
@@ -149,6 +153,14 @@ public class DatasetConfigurationEntity {
 
     public void setDatasetEntity(DatasetEntity datasetEntity) {
         this.datasetEntity = datasetEntity;
+    }
+
+    public SpecialistEntity getSpecialistEntity() {
+        return specialistEntity;
+    }
+
+    public void setSpecialistEntity(SpecialistEntity specialistEntity) {
+        this.specialistEntity = specialistEntity;
     }
 
     @Override
