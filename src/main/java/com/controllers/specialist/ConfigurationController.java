@@ -17,11 +17,11 @@ import java.security.Principal;
  * 2. Delete Configuration @DeleteMapping("/doctor-system/specialist/configuration")
  * 3. Change Configuration @PutMapping("/doctor-system/specialist/dataset/{configuration_id}") +
  * 4. Get Configuration by ID @GetMapping("/doctor-system/specialist/configuration/{configuration_id}") +
- * 5. Get All DataSet Configurations @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}")
- * 6. Get All DataSet Configurations Page @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/{page}")
- * 6. Get Specialist All Configurations @GetMapping("/doctor-system/specialist/configuration/all")
- * 7. Get Specialist All Configurations Page @GetMapping("/doctor-system/specialist/configuration/all/{page}")
- * 8. Activation Configurations @PutMapping("/doctor-system/specialist/configuration/{configuration_id}/activate")
+ * 5. Get All DataSet Configurations @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}") +
+ * 6. Get All DataSet Configurations Page @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/{page}") +
+ * 7. Get Specialist All DataSet Configurations @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/specialist") +
+ * 8. Get Specialist All DataSet Configurations Page @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/{page}/specialist") +
+ * 9. Activation Configurations @PutMapping("/doctor-system/specialist/configuration/{configuration_id}/activate")
  * */
 @Controller()
 public class ConfigurationController {
@@ -76,6 +76,28 @@ public class ConfigurationController {
         }
 
         return new ResponseEntity(configurationService.getAllConfigurationsByDataSetIdPage(dataSetId, page), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/specialist")
+    public ResponseEntity getAllSpecialistDataSetConfigurationByDataSetId(Principal principal, @PathVariable("dataset_id") Long dataSetId) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(configurationService.getAllSpecialistConfigurationsByDataSetId(dataSetId, specialistEntity), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/{page}/specialist")
+    public ResponseEntity getAllSpecialistDataSetConfigurationByDataSetIdPage(Principal principal,
+                                                                              @PathVariable("dataset_id") Long dataSetId,
+                                                                              @PathVariable("page") int page) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(configurationService.getAllSpecialistConfigurationsByDataSetIdPage(dataSetId, specialistEntity, page), HttpStatus.OK);
     }
 
     @PutMapping("/doctor-system/specialist/configuration/{configuration_id}")

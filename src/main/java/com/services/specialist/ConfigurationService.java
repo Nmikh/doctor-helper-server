@@ -18,7 +18,7 @@ import java.util.List;
 
 @Service
 public class ConfigurationService {
-    private final static int OBJECTS_ON_PAGE = 1;
+    private final static int OBJECTS_ON_PAGE = 10;
 
     @Autowired
     ConfigurationRepository configurationRepository;
@@ -90,16 +90,32 @@ public class ConfigurationService {
         return configurationRepository.findById(configurationId).get();
     }
 
-    public List<DatasetConfigurationEntity> getAllConfigurationsByDataSetId(Long dataSetId){
+    public List<DatasetConfigurationEntity> getAllConfigurationsByDataSetId(Long dataSetId) {
         DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
         return configurationRepository.findByDatasetEntityOrderByNameAsc(dataSetById);
     }
 
-    public ConfigurationPage getAllConfigurationsByDataSetIdPage(Long dataSetId, int page){
+    public ConfigurationPage getAllConfigurationsByDataSetIdPage(Long dataSetId, int page) {
         DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
         Page<DatasetConfigurationEntity> configurationPage =
                 configurationPaginationRepository.findByDatasetEntityOrderByNameAsc(dataSetById, new PageRequest(--page, OBJECTS_ON_PAGE));
 
         return new ConfigurationPage(configurationPage.getTotalPages(), configurationPage.getContent());
     }
+
+    public List<DatasetConfigurationEntity> getAllSpecialistConfigurationsByDataSetId(Long dataSetId, SpecialistEntity specialistEntity) {
+        DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
+
+        return configurationRepository.findByDatasetEntityAndSpecialistEntityOrderByNameAsc(dataSetById, specialistEntity);
+    }
+
+    public ConfigurationPage getAllSpecialistConfigurationsByDataSetIdPage(Long dataSetId, SpecialistEntity specialistEntity, int page) {
+        DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
+
+        Page<DatasetConfigurationEntity> configurationPage =
+                configurationPaginationRepository.findByDatasetEntityAndSpecialistEntityOrderByNameAsc(dataSetById, specialistEntity, new PageRequest(--page, OBJECTS_ON_PAGE));
+
+        return new ConfigurationPage(configurationPage.getTotalPages(), configurationPage.getContent());
+    }
+
 }
