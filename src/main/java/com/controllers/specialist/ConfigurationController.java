@@ -45,9 +45,9 @@ public class ConfigurationController {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
+        Long id = configurationService.create(configurationGet, dataSetId);
 
-
-        return new ResponseEntity(dataSetId, HttpStatus.resolve(201));
+        return new ResponseEntity(id, HttpStatus.resolve(201));
     }
 
 
