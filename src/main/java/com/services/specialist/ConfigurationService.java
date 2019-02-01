@@ -8,12 +8,17 @@ import com.models.entity.specialist.DatasetEntity;
 import com.models.entity.specialist.SpecialistEntity;
 import com.models.entity.specialist.SvmKernelParametrsEntity;
 import com.models.specialist.ConfigurationGet;
+import com.models.specialist.ConfigurationPage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ConfigurationService {
-    private final static int OBJECTS_ON_PAGE = 10;
+    private final static int OBJECTS_ON_PAGE = 1;
 
     @Autowired
     ConfigurationRepository configurationRepository;
@@ -53,10 +58,10 @@ public class ConfigurationService {
         return save.getId();
     }
 
-    public boolean changeConfiguration(ConfigurationGet configurationGet, Long configurationId, SpecialistEntity specialistEntity){
+    public boolean changeConfiguration(ConfigurationGet configurationGet, Long configurationId, SpecialistEntity specialistEntity) {
         DatasetConfigurationEntity datasetConfigurationEntity = configurationRepository.findById(configurationId).get();
 
-        if(datasetConfigurationEntity.getSpecialistEntity().getId() != specialistEntity.getId()){
+        if (datasetConfigurationEntity.getSpecialistEntity().getId() != specialistEntity.getId()) {
             return false;
         }
 
@@ -79,5 +84,22 @@ public class ConfigurationService {
         DatasetConfigurationEntity save = configurationRepository.save(datasetConfigurationEntity);
 
         return true;
+    }
+
+    public DatasetConfigurationEntity getConfigurationById(Long configurationId) {
+        return configurationRepository.findById(configurationId).get();
+    }
+
+    public List<DatasetConfigurationEntity> getAllConfigurationsByDataSetId(Long dataSetId){
+        DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
+        return configurationRepository.findByDatasetEntityOrderByNameAsc(dataSetById);
+    }
+
+    public ConfigurationPage getAllConfigurationsByDataSetIdPage(Long dataSetId, int page){
+        DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
+        Page<DatasetConfigurationEntity> configurationPage =
+                configurationPaginationRepository.findByDatasetEntityOrderByNameAsc(dataSetById, new PageRequest(--page, OBJECTS_ON_PAGE));
+
+        return new ConfigurationPage(configurationPage.getTotalPages(), configurationPage.getContent());
     }
 }
