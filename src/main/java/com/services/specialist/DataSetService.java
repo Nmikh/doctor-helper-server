@@ -14,8 +14,6 @@ import java.util.List;
 
 @Service
 public class DataSetService {
-    private final static int OBJECTS_ON_PAGE = 10;
-
     @Autowired
     DataSetRepository dataSetRepository;
 
@@ -66,8 +64,8 @@ public class DataSetService {
         return dataSetRepository.findAllByOrderByNameAsc();
     }
 
-    public DataSetPage getDataSetAllPage(int page) {
-        Page<DatasetEntity> dataSetpage = dataSetPaginationRepository.findAllByOrderByNameAsc(new PageRequest(--page, OBJECTS_ON_PAGE));
+    public DataSetPage getDataSetAllPage(int page, int objectsOnPage) {
+        Page<DatasetEntity> dataSetpage = dataSetPaginationRepository.findAllByOrderByNameAsc(new PageRequest(--page, objectsOnPage));
         return new DataSetPage(dataSetpage.getTotalPages(), dataSetpage.getContent());
     }
 
@@ -75,9 +73,9 @@ public class DataSetService {
         return dataSetRepository.findAllBySpecialistEntityOrderByNameAsc(specialistEntity);
     }
 
-    public DataSetPage getSpecialistDataSetAllPage(SpecialistEntity specialistEntity, int page) {
+    public DataSetPage getSpecialistDataSetAllPage(SpecialistEntity specialistEntity, int page, int objectsOnPage) {
         Page<DatasetEntity> dataSetpage =
-                dataSetPaginationRepository.findAllBySpecialistEntityOrderByNameAsc(specialistEntity, new PageRequest(--page, OBJECTS_ON_PAGE));
+                dataSetPaginationRepository.findAllBySpecialistEntityOrderByNameAsc(specialistEntity, new PageRequest(--page, objectsOnPage));
         return new DataSetPage(dataSetpage.getTotalPages(), dataSetpage.getContent());
     }
 

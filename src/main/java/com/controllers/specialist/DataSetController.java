@@ -65,14 +65,18 @@ public class DataSetController {
         return new ResponseEntity(dataSetService.getDataSetAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/doctor-system/specialist/dataset/all/{page}")
-    public ResponseEntity getDataSetAllPage(Principal principal, @PathVariable("page") int page) {
+    @GetMapping("/doctor-system/specialist/dataset/all/{page}/{objects_on_page}")
+    public ResponseEntity getDataSetAllPage(Principal principal,
+                                            @PathVariable("page") int page,
+                                            @PathVariable("objects_on_page") int objectsOnPage) {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
         if (specialistEntity == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        return new ResponseEntity(dataSetService.getDataSetAllPage(page), HttpStatus.OK);
+        return new ResponseEntity(
+                dataSetService.getDataSetAllPage(page, objectsOnPage),
+                HttpStatus.OK);
     }
 
     @GetMapping("/doctor-system/specialist/dataset/all/specialist")
@@ -85,14 +89,18 @@ public class DataSetController {
         return new ResponseEntity(dataSetService.getSpecialistDataSetAll(specialistEntity), HttpStatus.OK);
     }
 
-    @GetMapping("/doctor-system/specialist/dataset/all/{page}/specialist")
-    public ResponseEntity getSpecialistDataSetAllPage(Principal principal, @PathVariable("page") int page) {
+    @GetMapping("/doctor-system/specialist/dataset/all/{page}/{objects_on_page}/specialist")
+    public ResponseEntity getSpecialistDataSetAllPage(Principal principal,
+                                                      @PathVariable("page") int page,
+                                                      @PathVariable("objects_on_page") int objectsOnPage) {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
         if (specialistEntity == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        return new ResponseEntity(dataSetService.getSpecialistDataSetAllPage(specialistEntity,page), HttpStatus.OK);
+        return new ResponseEntity(
+                dataSetService.getSpecialistDataSetAllPage(specialistEntity,page, objectsOnPage),
+                HttpStatus.OK);
     }
 
     @PutMapping("/doctor-system/specialist/dataset/{dataset_id}")
@@ -124,5 +132,4 @@ public class DataSetController {
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
-
 }

@@ -66,16 +66,19 @@ public class ConfigurationController {
         return new ResponseEntity(configurationService.getAllConfigurationsByDataSetId(dataSetId), HttpStatus.OK);
     }
 
-    @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/{page}")
+    @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/{page}/{objects_on_page}")
     public ResponseEntity getAllDataSetConfigurationByDataSetIdPage(Principal principal,
                                                                     @PathVariable("dataset_id") Long dataSetId,
-                                                                    @PathVariable("page") int page) {
+                                                                    @PathVariable("page") int page,
+                                                                    @PathVariable("objects_on_page") int objectsOnPage) {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
         if (specialistEntity == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        return new ResponseEntity(configurationService.getAllConfigurationsByDataSetIdPage(dataSetId, page), HttpStatus.OK);
+        return new ResponseEntity(
+                configurationService.getAllConfigurationsByDataSetIdPage(dataSetId, page,objectsOnPage),
+                HttpStatus.OK);
     }
 
     @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/specialist")
@@ -88,16 +91,20 @@ public class ConfigurationController {
         return new ResponseEntity(configurationService.getAllSpecialistConfigurationsByDataSetId(dataSetId, specialistEntity), HttpStatus.OK);
     }
 
-    @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/{page}/specialist")
+    @GetMapping("/doctor-system/specialist/configuration/all/{dataset_id}/{page}/{objects_on_page}/specialist")
     public ResponseEntity getAllSpecialistDataSetConfigurationByDataSetIdPage(Principal principal,
                                                                               @PathVariable("dataset_id") Long dataSetId,
-                                                                              @PathVariable("page") int page) {
+                                                                              @PathVariable("page") int page,
+                                                                              @PathVariable("objects_on_page") int objectsOnPage) {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
         if (specialistEntity == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        return new ResponseEntity(configurationService.getAllSpecialistConfigurationsByDataSetIdPage(dataSetId, specialistEntity, page), HttpStatus.OK);
+        return new ResponseEntity(
+                configurationService
+                        .getAllSpecialistConfigurationsByDataSetIdPage(dataSetId, specialistEntity, page,objectsOnPage),
+                HttpStatus.OK);
     }
 
     @PutMapping("/doctor-system/specialist/configuration/{configuration_id}")
@@ -114,6 +121,4 @@ public class ConfigurationController {
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
-
-
 }

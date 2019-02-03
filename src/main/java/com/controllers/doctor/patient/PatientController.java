@@ -62,8 +62,10 @@ public class PatientController {
         return new ResponseEntity(patientByNameAndSurnameLike, HttpStatus.OK);
     }
 
-    @GetMapping("/doctor-system/doctor/patient/params/{page}")
-    public ResponseEntity findPatientsPageByNameAndSurnameLike(Principal principal, @PathVariable("page") int page,
+    @GetMapping("/doctor-system/doctor/patient/params/{page}/{objects_on_page}")
+    public ResponseEntity findPatientsPageByNameAndSurnameLike(Principal principal,
+                                                               @PathVariable("page") int page,
+                                                               @PathVariable("objects_on_page") int objectsOnPage,
                                                                @RequestParam("name") String name,
                                                                @RequestParam("surname") String surname) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
@@ -72,7 +74,7 @@ public class PatientController {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        PatientPageReturn patients = patientService.getPatientsPageByNameAndSurnameLike(name, surname, page);
+        PatientPageReturn patients = patientService.getPatientsPageByNameAndSurnameLike(name, surname, page, objectsOnPage);
 
         return new ResponseEntity(patients, HttpStatus.OK);
     }
@@ -90,15 +92,17 @@ public class PatientController {
         return new ResponseEntity(patientByNameAndSurnameLike, HttpStatus.OK);
     }
 
-    @GetMapping("/doctor-system/doctor/patient/all/{page}")
-    public ResponseEntity getAllPatientsPage(Principal principal, @PathVariable("page") int page) {
+    @GetMapping("/doctor-system/doctor/patient/all/{page}/{objects_on_page}")
+    public ResponseEntity getAllPatientsPage(Principal principal,
+                                             @PathVariable("page") int page,
+                                             @PathVariable("objects_on_page") int objectsOnPage) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
 
         if (doctor == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        return new ResponseEntity(patientService.getPageOfPatients(page), HttpStatus.OK);
+        return new ResponseEntity(patientService.getPageOfPatients(page, objectsOnPage), HttpStatus.OK);
     }
 
     @PutMapping("/doctor-system/doctor/patient/{patient_id}")

@@ -18,7 +18,6 @@ import java.util.List;
 
 @Service
 public class ConfigurationService {
-    private final static int OBJECTS_ON_PAGE = 10;
 
     @Autowired
     ConfigurationRepository configurationRepository;
@@ -95,10 +94,10 @@ public class ConfigurationService {
         return configurationRepository.findByDatasetEntityOrderByNameAsc(dataSetById);
     }
 
-    public ConfigurationPage getAllConfigurationsByDataSetIdPage(Long dataSetId, int page) {
+    public ConfigurationPage getAllConfigurationsByDataSetIdPage(Long dataSetId, int page, int objectsOnPage) {
         DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
         Page<DatasetConfigurationEntity> configurationPage =
-                configurationPaginationRepository.findByDatasetEntityOrderByNameAsc(dataSetById, new PageRequest(--page, OBJECTS_ON_PAGE));
+                configurationPaginationRepository.findByDatasetEntityOrderByNameAsc(dataSetById, new PageRequest(--page, objectsOnPage));
 
         return new ConfigurationPage(configurationPage.getTotalPages(), configurationPage.getContent());
     }
@@ -109,11 +108,11 @@ public class ConfigurationService {
         return configurationRepository.findByDatasetEntityAndSpecialistEntityOrderByNameAsc(dataSetById, specialistEntity);
     }
 
-    public ConfigurationPage getAllSpecialistConfigurationsByDataSetIdPage(Long dataSetId, SpecialistEntity specialistEntity, int page) {
+    public ConfigurationPage getAllSpecialistConfigurationsByDataSetIdPage(Long dataSetId, SpecialistEntity specialistEntity, int page, int objectsOnPage) {
         DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
 
         Page<DatasetConfigurationEntity> configurationPage =
-                configurationPaginationRepository.findByDatasetEntityAndSpecialistEntityOrderByNameAsc(dataSetById, specialistEntity, new PageRequest(--page, OBJECTS_ON_PAGE));
+                configurationPaginationRepository.findByDatasetEntityAndSpecialistEntityOrderByNameAsc(dataSetById, specialistEntity, new PageRequest(--page, objectsOnPage));
 
         return new ConfigurationPage(configurationPage.getTotalPages(), configurationPage.getContent());
     }

@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 @Service
 public class PatientService {
-    private final static int OBJECTS_ON_PAGE = 10;
 
     @Autowired
     PatientRepository patientRepository;
@@ -62,17 +62,17 @@ public class PatientService {
         patientRepository.save(patient);
     }
 
-    public PatientPageReturn getPageOfPatients(int page) {
+    public PatientPageReturn getPageOfPatients(int page, int objectsOnPage) {
         Page<PatientEntity> allPatientsOrderBySurname =
-                patientPaginationRepository.findAllByOrderBySurnameAscNameAsc(new PageRequest(--page, OBJECTS_ON_PAGE));
+                patientPaginationRepository.findAllByOrderBySurnameAscNameAsc(new PageRequest(--page, objectsOnPage));
 
         return new PatientPageReturn(allPatientsOrderBySurname.getTotalPages(),
                 allPatientsOrderBySurname.getContent());
     }
 
-    public PatientPageReturn getPatientsPageByNameAndSurnameLike(String nameLike, String surnameLike, int page) {
+    public PatientPageReturn getPatientsPageByNameAndSurnameLike(String nameLike, String surnameLike, int page, int objectsOnPage) {
         Page<PatientEntity> allPatients = patientPaginationRepository.findByNameContainingAndSurnameContainingOrderBySurnameAscNameAsc(
-                nameLike, surnameLike, new PageRequest(--page, OBJECTS_ON_PAGE));
+                nameLike, surnameLike, new PageRequest(--page, objectsOnPage));
 
         return new PatientPageReturn(allPatients.getTotalPages(), allPatients.getContent());
     }

@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @Service
 public class PageService {
-    private final static int OBJECTS_ON_PAGE = 10;
 
     @Autowired
     PageRepository pageRepository;
@@ -89,12 +88,12 @@ public class PageService {
         return pageRepository.findByRecordOrderByDateDesc(patientEntity.getRecord());
     }
 
-    public PagesPageReturn getAllPagesPage(Long patientId, int page) {
+    public PagesPageReturn getAllPagesPage(Long patientId, int page, int objectsOnPage) {
         PatientEntity patientEntity = patientRepository.findById(patientId).get();
 
         Page<PageEntity> pagesPage =
                 pagePaginationRepository.findByRecordOrderByDateDesc(
-                        patientEntity.getRecord(), new PageRequest(--page, OBJECTS_ON_PAGE));
+                        patientEntity.getRecord(), new PageRequest(--page, objectsOnPage));
 
         return new PagesPageReturn(pagesPage.getTotalPages(), pagesPage.getContent());
     }
