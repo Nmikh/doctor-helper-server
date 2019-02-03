@@ -15,6 +15,10 @@ public class DatasetObjectsEntity {
     @Column(name = "PARAMS")
     private String params;
 
+    @Basic
+    @Column(name = "OBJECT_CLASS")
+    private Long objectClass;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "DATASET_ID")
     private DatasetEntity datasetEntity;
@@ -33,6 +37,22 @@ public class DatasetObjectsEntity {
 
     public void setParams(String params) {
         this.params = params;
+    }
+
+    public Long getObjectClass() {
+        return objectClass;
+    }
+
+    public void setObjectClass(Long objectClass) {
+        this.objectClass = objectClass;
+    }
+
+    public DatasetEntity getDatasetEntity() {
+        return datasetEntity;
+    }
+
+    public void setDatasetEntity(DatasetEntity datasetEntity) {
+        this.datasetEntity = datasetEntity;
     }
 
     @Override
