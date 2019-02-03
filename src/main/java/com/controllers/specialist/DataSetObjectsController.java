@@ -25,7 +25,7 @@ public class DataSetObjectsController {
     DataSetObjectsService dataSetObjectsService;
 
     @PostMapping("/doctor-system/specialist/dataset/{dataset_id}/objects")
-    public ResponseEntity createDataSet(Principal principal,
+    public ResponseEntity uploadDataSet(Principal principal,
                                         @RequestParam("file") MultipartFile file,
                                         @PathVariable("dataset_id") Long dataSetId) throws IOException {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
@@ -35,10 +35,9 @@ public class DataSetObjectsController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
 
-        if(dataSetObjectsService.addDataObjectsToDataSet(file, specialistEntity, dataSetId)){
+        if (dataSetObjectsService.addDataObjectsToDataSet(file, specialistEntity, dataSetId)) {
             return new ResponseEntity(HttpStatus.resolve(200));
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
-
 }
