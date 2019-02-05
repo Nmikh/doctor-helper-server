@@ -24,8 +24,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/doctor-system/specialist/registration", "/h2",
-                        "/doctor-system/doctor/registration/*", "/doctor-system/doctor/specializations").permitAll()
+                .antMatchers(
+                        "/doctor-system/specialist/registration",
+                        "/h2",
+                        "/doctor-system/doctor/registration/*",
+                        "/doctor-system/doctor/specializations",
+                        "/v2/api-docs/**",
+                        "/swagger-ui.html/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()

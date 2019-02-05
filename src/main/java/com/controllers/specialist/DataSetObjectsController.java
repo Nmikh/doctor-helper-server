@@ -3,16 +3,17 @@ package com.controllers.specialist;
 import com.models.entity.specialist.SpecialistEntity;
 import com.services.specialist.DataSetObjectsService;
 import com.services.specialist.SpecialistService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 
 @Controller
@@ -40,4 +41,13 @@ public class DataSetObjectsController {
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
+
+//    @GetMapping("/doctor-system/specialist/dataset/{dataset_id}/objects")
+//    public @ResponseBody byte[] downloadDataSet(Principal principal, @PathVariable("dataset_id") Long dataSetId) throws IOException {
+//
+//        InputStream in = getClass()
+//                .getResourceAsStream("C:/Users/user/Desktop/doctor-helper-server/src/main/resources/1.txt");
+//        return IOUtils.toByteArray(in);
+//    }
+
 }
