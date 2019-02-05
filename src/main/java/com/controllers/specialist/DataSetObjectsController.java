@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
@@ -41,13 +40,4 @@ public class DataSetObjectsController {
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
-
-//    @GetMapping("/doctor-system/specialist/dataset/{dataset_id}/objects")
-//    public @ResponseBody byte[] downloadDataSet(Principal principal, @PathVariable("dataset_id") Long dataSetId) throws IOException {
-//
-//        InputStream in = getClass()
-//                .getResourceAsStream("C:/Users/user/Desktop/doctor-helper-server/src/main/resources/1.txt");
-//        return IOUtils.toByteArray(in);
-//    }
-
 }
