@@ -14,7 +14,7 @@ public class SpecializationController {
     SpecializationService specializationService;
 
     @GetMapping("/doctor-system/doctor/specializations")
-    public ResponseEntity authDoctor() {
+    public ResponseEntity getAllSpecializations() {
         return new ResponseEntity(specializationService.getAllSpecializations(), HttpStatus.OK);
     }
 }
