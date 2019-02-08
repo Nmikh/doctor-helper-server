@@ -17,4 +17,6 @@ public interface ConfigurationRepository extends JpaRepository<DatasetConfigurat
     List<DatasetConfigurationEntity> findByDatasetEntityOrderByNameAsc(DatasetEntity datasetEntity);
 
     List<DatasetConfigurationEntity> findByDatasetEntityAndSpecialistEntityOrderByNameAsc(DatasetEntity datasetEntity, SpecialistEntity specialistEntity);
+
+    DatasetConfigurationEntity findByDatasetEntityAndActiveTrue(DatasetEntity datasetEntity);
 }

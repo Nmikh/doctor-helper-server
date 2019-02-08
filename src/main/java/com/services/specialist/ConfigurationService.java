@@ -3,10 +3,7 @@ package com.services.specialist;
 import com.DAO.specialist.ConfigurationPaginationRepository;
 import com.DAO.specialist.ConfigurationRepository;
 import com.DAO.specialist.SvmKernelParamsRepository;
-import com.models.entity.specialist.DatasetConfigurationEntity;
-import com.models.entity.specialist.DatasetEntity;
-import com.models.entity.specialist.SpecialistEntity;
-import com.models.entity.specialist.SvmKernelParametrsEntity;
+import com.models.entity.specialist.*;
 import com.models.specialist.ConfigurationGet;
 import com.models.specialist.ConfigurationPage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -30,6 +28,9 @@ public class ConfigurationService {
 
     @Autowired
     DataSetService dataSetService;
+
+    @Autowired
+    MagazineService magazineService;
 
     public Long createConfiguration(ConfigurationGet configurationGet, Long dataSetId, SpecialistEntity specialistEntity) {
         DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
@@ -117,4 +118,29 @@ public class ConfigurationService {
         return new ConfigurationPage(configurationPage.getTotalPages(), configurationPage.getContent());
     }
 
+    public void activateConfiguration(Long configurationId, SpecialistEntity specialistEntity) {
+        DatasetConfigurationMagazineEntity datasetConfigurationMagazineEntity = new DatasetConfigurationMagazineEntity();
+
+        DatasetConfigurationEntity datasetConfigurationAfter = configurationRepository.findById(configurationId).get();
+        DatasetConfigurationEntity datasetConfigurationBefore = configurationRepository.findByDatasetEntityAndActiveTrue(datasetConfigurationAfter.getDatasetEntity());
+
+        if (datasetConfigurationBefore != null) {
+            if (datasetConfigurationAfter.getId() == datasetConfigurationBefore.getId()) {
+                return;
+            }
+
+            datasetConfigurationBefore.setActive(false);
+            configurationRepository.save(datasetConfigurationBefore);
+            datasetConfigurationMagazineEntity.setDatasetConfigurationBefore(datasetConfigurationBefore);
+        }
+
+        datasetConfigurationAfter.setActive(true);
+        configurationRepository.save(datasetConfigurationAfter);
+
+        datasetConfigurationMagazineEntity.setDateTime(new Timestamp(System.currentTimeMillis()));
+        datasetConfigurationMagazineEntity.setDatasetConfigurationAfter(datasetConfigurationAfter);
+        datasetConfigurationMagazineEntity.setSpecialistEntity(specialistEntity);
+
+        magazineService.createMagazineRow(datasetConfigurationMagazineEntity);
+    }
 }

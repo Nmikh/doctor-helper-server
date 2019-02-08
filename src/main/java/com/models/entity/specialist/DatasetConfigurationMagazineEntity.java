@@ -1,19 +1,21 @@
 package com.models.entity.specialist;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "DATASET_CONFIGURATION_MAGAZINE")
 public class DatasetConfigurationMagazineEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
 
     @Basic
     @Column(name = "DATE_TIME")
-    private Timestamp dateTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CONFIGURATION_ID_BEFORE")
@@ -35,11 +37,11 @@ public class DatasetConfigurationMagazineEntity {
         this.id = id;
     }
 
-    public Timestamp getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Timestamp dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 

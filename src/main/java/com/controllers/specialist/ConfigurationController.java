@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.text.ParseException;
 
 /*
  * 1. Create Configuration @PostMapping("/doctor-system/specialist/configuration/{dataset_id}") +
@@ -77,7 +78,7 @@ public class ConfigurationController {
         }
 
         return new ResponseEntity(
-                configurationService.getAllConfigurationsByDataSetIdPage(dataSetId, page,objectsOnPage),
+                configurationService.getAllConfigurationsByDataSetIdPage(dataSetId, page, objectsOnPage),
                 HttpStatus.OK);
     }
 
@@ -103,7 +104,7 @@ public class ConfigurationController {
 
         return new ResponseEntity(
                 configurationService
-                        .getAllSpecialistConfigurationsByDataSetIdPage(dataSetId, specialistEntity, page,objectsOnPage),
+                        .getAllSpecialistConfigurationsByDataSetIdPage(dataSetId, specialistEntity, page, objectsOnPage),
                 HttpStatus.OK);
     }
 
@@ -120,5 +121,17 @@ public class ConfigurationController {
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @PutMapping("/doctor-system/specialist/configuration/{configuration_id}/activate")
+    public ResponseEntity activateDataSetConfiguration(Principal principal, @PathVariable("configuration_id") Long configurationId) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        configurationService.activateConfiguration(configurationId, specialistEntity);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
