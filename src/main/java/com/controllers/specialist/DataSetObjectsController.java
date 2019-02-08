@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
@@ -39,5 +41,16 @@ public class DataSetObjectsController {
             return new ResponseEntity(HttpStatus.resolve(200));
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/doctor-system/specialist/dataset/{dataset_id}/objects")
+    @ResponseBody
+    public ResponseEntity downloadDataSet(Principal principal, @PathVariable("dataset_id") Long dataSetId) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(dataSetObjectsService.getDatSet(dataSetId), HttpStatus.OK);
     }
 }

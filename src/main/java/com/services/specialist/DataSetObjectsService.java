@@ -26,12 +26,28 @@ public class DataSetObjectsService {
     @Autowired
     DataSetObjectsRepository dataSetObjectsRepository;
 
+    public String getDatSet(Long dataSetId) {
+        DatasetEntity dataSet = dataSetService.getDataSetById(dataSetId);
+        List<DatasetObjectsEntity> objects = dataSetObjectsRepository.findByDatasetEntity(dataSet);
+
+        String result = "";
+        for (int i = 0; i < objects.size(); i++) {
+            result = result + objects.get(i).getId() + ","
+                    + objects.get(i).getObjectClass() + ","
+                    + objects.get(i).getParams() + "\r\n";
+        }
+
+        return result;
+    }
+
     public boolean addDataObjectsToDataSet(MultipartFile file, SpecialistEntity specialistEntity, Long dataSetId) throws IOException {
         DatasetEntity dataSet = dataSetService.getDataSetById(dataSetId);
 
         if (specialistEntity.getId() != dataSet.getSpecialistEntity().getId()) {
             return false;
         }
+
+        dataSetObjectsRepository.deleteDatasetObjectsEntitiesByDatasetEntity(dataSet);
 
         List<DatasetObjectsEntity> dataSetObjectsFromFile = getDataSetObjectsFromFile(file, dataSet);
 
