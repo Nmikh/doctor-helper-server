@@ -25,7 +25,6 @@ public class MagazineService {
         for (int i = 0; i < magazineRowsId.size(); i++) {
             magazine.add(magazineRepository.findById(magazineRowsId.get(i).longValue()).get());
         }
-
         return magazine;
     }
 
