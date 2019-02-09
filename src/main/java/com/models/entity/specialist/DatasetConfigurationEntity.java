@@ -43,6 +43,10 @@ public class DatasetConfigurationEntity {
     @Column(name = "NU")
     private Double nu;
 
+    @Basic
+    @Column(name = "TEST_PART")
+    private Double testPart;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SVM_TYPE_ID")
     private SvmKernelParametrsEntity svmParametr;
@@ -129,6 +133,14 @@ public class DatasetConfigurationEntity {
 
     public void setNu(Double nu) {
         this.nu = nu;
+    }
+
+    public Double getTestPart() {
+        return testPart;
+    }
+
+    public void setTestPart(Double testPart) {
+        this.testPart = testPart;
     }
 
     public SvmKernelParametrsEntity getSvmParametr() {

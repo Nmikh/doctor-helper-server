@@ -3,21 +3,14 @@ package com.models.specialist;
 public class ConfigurationGet {
 
     private String name;
-
     private Double eps;
-
     private Double degree;
-
     private Double probability;
-
     private Double gamma;
-
     private Double c;
-
     private Double nu;
-
+    private Double testPart;
     private Long svmParametr;
-
     private Long kernelParametr;
 
     public String getName() {
@@ -74,6 +67,14 @@ public class ConfigurationGet {
 
     public void setNu(Double nu) {
         this.nu = nu;
+    }
+
+    public Double getTestPart() {
+        return testPart;
+    }
+
+    public void setTestPart(Double testPart) {
+        this.testPart = testPart;
     }
 
     public Long getSvmParametr() {

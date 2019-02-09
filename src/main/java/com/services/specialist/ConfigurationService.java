@@ -48,6 +48,7 @@ public class ConfigurationService {
         datasetConfigurationEntity.setNu(configurationGet.getNu());
         datasetConfigurationEntity.setProbability(configurationGet.getProbability());
         datasetConfigurationEntity.setName(configurationGet.getName());
+        datasetConfigurationEntity.setTestPart(configurationGet.getTestPart());
 
         datasetConfigurationEntity.setDatasetEntity(dataSetById);
         datasetConfigurationEntity.setKernelParametr(kernelParam);
@@ -76,6 +77,7 @@ public class ConfigurationService {
         datasetConfigurationEntity.setNu(configurationGet.getNu());
         datasetConfigurationEntity.setProbability(configurationGet.getProbability());
         datasetConfigurationEntity.setName(configurationGet.getName());
+        datasetConfigurationEntity.setTestPart(configurationGet.getTestPart());
 
         datasetConfigurationEntity.setKernelParametr(kernelParam);
         datasetConfigurationEntity.setSvmParametr(svmParam);

@@ -38,6 +38,7 @@ public class DataSetService {
 
         dataSet.setName(datasetEntity.getName());
         dataSet.setDescription(datasetEntity.getDescription());
+        dataSet.setColumns(datasetEntity.getColumns());
 
         dataSetRepository.save(dataSet);
         return true;

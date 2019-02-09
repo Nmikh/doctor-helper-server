@@ -25,6 +25,10 @@ public class DatasetEntity {
     @Column(name = "ACTIVE")
     private Boolean active;
 
+    @Basic
+    @Column(name = "COLUMNS")
+    private String columns;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SPECIALIST_ID")
     private SpecialistEntity specialistEntity;
@@ -59,6 +63,14 @@ public class DatasetEntity {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public String getColumns() {
+        return columns;
+    }
+
+    public void setColumns(String columns) {
+        this.columns = columns;
     }
 
     public SpecialistEntity getSpecialistEntity() {
