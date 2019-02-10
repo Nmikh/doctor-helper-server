@@ -134,4 +134,24 @@ public class ConfigurationController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @GetMapping("/doctor-system/specialist/configuration/svm")
+    public ResponseEntity getAllSvmTypes(Principal principal) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(configurationService.getAllSvmTypes(), HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/specialist/configuration/kernel")
+    public ResponseEntity getAllKernelTypes(Principal principal) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(configurationService.getAllKernelTypes(), HttpStatus.OK);
+    }
 }

@@ -16,8 +16,10 @@
         <class>com.models.entity.specialist.SvmKernelParametrsEntity</class>
         <class>com.models.entity.specialist.DatasetConfigurationEntity</class>
         <class>com.models.entity.specialist.DatasetConfigurationMagazineEntity</class>
+        <class>com.conformal_predictors.models.entity.ConfigurationResultEntity</class>
+        <class>com.conformal_predictors.models.entity.ConfusionMatrixEntity</class>
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:h2:/home/nikolaimikhalyuk/Desktop/doctor-helper-server/doctor-helper-server-db"/>
+            <property name="hibernate.connection.url" value="jdbc:h2:D:/doctor-helper-server/doctor-helper-server-db"/>
             <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
             <property name="hibernate.connection.username" value=""/>
             <property name="hibernate.connection.password" value=""/>

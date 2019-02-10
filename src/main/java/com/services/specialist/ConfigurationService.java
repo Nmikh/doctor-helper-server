@@ -145,4 +145,12 @@ public class ConfigurationService {
 
         magazineService.createMagazineRow(datasetConfigurationMagazineEntity);
     }
+
+    public List<SvmKernelParametrsEntity> getAllSvmTypes(){
+        return svmKernelParamsRepository.findBySvmKernelTrue();
+    }
+
+    public List<SvmKernelParametrsEntity> getAllKernelTypes(){
+        return svmKernelParamsRepository.findBySvmKernelFalse();
+    }
 }

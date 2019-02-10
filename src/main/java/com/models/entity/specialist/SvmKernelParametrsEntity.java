@@ -1,5 +1,7 @@
 package com.models.entity.specialist;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -14,6 +16,11 @@ public class SvmKernelParametrsEntity {
     @Basic
     @Column(name = "NAME")
     private String name;
+
+    @JsonIgnore
+    @Basic
+    @Column(name = "SVM_KERNEL")
+    private Boolean svmKernel;
 
     public long getId() {
         return id;
