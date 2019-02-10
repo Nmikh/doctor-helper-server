@@ -1,7 +1,9 @@
 package com.controllers.specialist;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.models.entity.specialist.SpecialistEntity;
 import com.services.specialist.DataSetConfigurationResultService;
+import com.services.specialist.SpecialistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -20,27 +23,30 @@ public class DataSetConfigurationResultController {
     @Autowired
     DataSetConfigurationResultService dataSetConfigurationResultService;
 
-    @PostMapping("/doctor-system/specialist/result/single/{configutration_id}")
-    public ResponseEntity getSingleResult(@PathVariable Long configurationId){
-        return new ResponseEntity(HttpStatus.OK);
+    @Autowired
+    SpecialistService specialistService;
+
+    @PostMapping("/doctor-system/specialist/result/{configutration_id}")
+    public ResponseEntity startConfigutrationTest(@PathVariable("configutration_id") Long configurationId, Principal principal) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity(
+                dataSetConfigurationResultService.startConfigurationTest(configurationId),
+                HttpStatus.OK);
     }
 
-//    @PostMapping(value = "/write-data")
-//    public String writeDataToHazelcast(@RequestParam String key, @RequestParam String value) {
-//        Map<String, String> hazelcastMap = hazelcastInstance.getMap("my-map");
-//        hazelcastMap.put(key, value);
-//        return "Data is stored.";
-//    }
-//
-//    @GetMapping(value = "/read-data")
-//    public String readDataFromHazelcast(@RequestParam String key) {
-//        Map<String, String> hazelcastMap = hazelcastInstance.getMap("my-map2");
-//        return hazelcastMap.get(key);
-//    }
-//
-//    @GetMapping(value = "/read-all-data")
-//    public Map<String, String> readAllDataFromHazelcast() {
-//        Map<String, String> hazelcastMap = hazelcastInstance.getMap("my-map");
-//        return hazelcastInstance.getMap("my-map");
-//    }
+    @GetMapping("/doctor-system/specialist/result/{process_id}")
+    public ResponseEntity getStartConfigutrationtResult(@PathVariable("process_id") Long processId, Principal principal) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(
+                dataSetConfigurationResultService.getConfigurationTestResult(processId),
+                HttpStatus.OK);
+    }
+
 }

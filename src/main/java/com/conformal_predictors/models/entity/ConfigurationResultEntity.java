@@ -45,11 +45,11 @@ public class ConfigurationResultEntity {
     @Column(name = "ALPHA_NEGATIVE", nullable = true, precision = 0)
     private Double alphaNegative;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
     @JoinColumn(name = "CONFIGURATION_ID")
     private DatasetConfigurationEntity datasetConfigurationEntity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
     @JoinColumn(name = "DATASET_OBJECT_ID")
     private DatasetObjectsEntity datasetObjectsEntity;
 

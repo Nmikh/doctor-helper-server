@@ -285,18 +285,19 @@ public class SymptomsService {
 
         if (prediction.getpPositive() > prediction.getpNegative()) {
             prediction.setPredictClass((long) 1);
-            confidence = 1 - prediction.getpNegative();
+            confidence = (double) 1 - prediction.getpNegative();
             credibility = prediction.getpPositive();
         } else if (prediction.getpNegative() > prediction.getpPositive()) {
             prediction.setPredictClass((long) -1);
-            confidence = 1 - prediction.getpPositive();
+            confidence = (double) 1 - prediction.getpPositive();
             credibility = prediction.getpNegative();
         } else if (prediction.getpPositive() == prediction.getpNegative()) {
             prediction.setPredictClass((long) 0);
-            confidence = 1 - prediction.getpNegative();
+            confidence = (double) 1 - prediction.getpNegative();
             credibility = prediction.getpPositive();
 
         }
+
         prediction.setConfidence(confidence);
         prediction.setCredibility(credibility);
 

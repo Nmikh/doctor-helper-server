@@ -40,7 +40,7 @@ public class ConfusionMatrixEntity {
     @Column(name = "UNCERTAIN_PREDICTIONS", nullable = true)
     private Long uncertainPredictions;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.REMOVE)
     @JoinColumn(name = "CONFIGURATION_ID")
     private DatasetConfigurationEntity datasetConfigurationEntity;
 
