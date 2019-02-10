@@ -49,7 +49,7 @@ public class SymptomsService {
         dataSet.add(testObject);
         svm_model svmModelPositive = this.svmTrainConformalPredict(dataSet, datasetConfiguration);
         int positiveAlphaIndex = -1; // index of the checking object in model
-        long alphaPositive = 0; // alpha of the checking object
+        double alphaPositive = 0; // alpha of the checking object
         int countAlphasPositive = 0; // positive alphas in train dataSet
         ArrayList<Double> positiveSupportVectorsAlphas = new ArrayList<Double>(); // alphas of support vectors where y=1
         double pPositive = 0;
@@ -70,7 +70,7 @@ public class SymptomsService {
         //if positiveAlphaIndex != -1 - alpha of the checking object - support vector
         //svmModelPositive.sv_coef - massive of alpha * y
         if (positiveAlphaIndex != -1) {
-            alphaPositive = (long) Math.abs(svmModelPositive.sv_coef[0][positiveAlphaIndex]);
+            alphaPositive = Math.abs(svmModelPositive.sv_coef[0][positiveAlphaIndex]);
         }
 
         ArrayList<Double> supportVectorsAlphas = new ArrayList<Double>();
@@ -117,7 +117,7 @@ public class SymptomsService {
         svm_model svmModelNegative = this.svmTrainConformalPredict(dataSet, datasetConfiguration);
 
         int negativeAlphaIndex = -1; // index of the checking object in model
-        long alphaNegative = 0; // alpha of the checking object
+        double alphaNegative = 0; // alpha of the checking object
         int countAlphasNegative = 0; // negative alphas in train dataSet
         ArrayList<Double> negativeSupportVectorsAlphas = new ArrayList<Double>(); // alphas of support vectors where y=-1
         double pNegative = 0;
@@ -138,7 +138,7 @@ public class SymptomsService {
         //if negativeAlphaIndex != -1 - alpha of the checking object - support vector
         //svmModelNegative.sv_coef - massive of alpha * y
         if (negativeAlphaIndex != -1) {
-            alphaNegative = (long) Math.abs(svmModelNegative.sv_coef[0][negativeAlphaIndex]);
+            alphaNegative = Math.abs(svmModelNegative.sv_coef[0][negativeAlphaIndex]);
         }
 
         ArrayList<Double> supportVectorsAlphas = new ArrayList<Double>();
