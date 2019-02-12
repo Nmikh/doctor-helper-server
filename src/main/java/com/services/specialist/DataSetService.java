@@ -80,4 +80,7 @@ public class DataSetService {
         return new DataSetPage(dataSetpage.getTotalPages(), dataSetpage.getContent());
     }
 
+    public List<DatasetEntity> findAllActiveDataSets(){
+        return dataSetRepository.findAllByActiveTrue();
+    }
 }

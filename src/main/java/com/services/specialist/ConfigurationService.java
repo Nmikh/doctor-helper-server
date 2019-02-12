@@ -153,4 +153,8 @@ public class ConfigurationService {
     public List<SvmKernelParametrsEntity> getAllKernelTypes(){
         return svmKernelParamsRepository.findBySvmKernelFalse();
     }
+
+    public DatasetConfigurationEntity findActiveConfiguration(DatasetEntity datasetEntity){
+        return configurationRepository.findByDatasetEntityAndActiveTrue(datasetEntity);
+    }
 }

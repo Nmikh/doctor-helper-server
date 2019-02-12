@@ -20,4 +20,7 @@ public interface DataSetRepository extends JpaRepository<DatasetEntity, Long> {
 
     @Transactional(readOnly = true)
     List<DatasetEntity> findAllBySpecialistEntityOrderByNameAsc(SpecialistEntity specialistEntity);
+
+    @Transactional(readOnly = true)
+    List<DatasetEntity> findAllByActiveTrue();
 }
