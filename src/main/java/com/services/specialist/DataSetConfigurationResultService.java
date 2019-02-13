@@ -5,6 +5,7 @@ import com.cache.HazelCastCache;
 import com.conformal_predictors.DAO.ConfigurationResultRepository;
 import com.conformal_predictors.DAO.ConfusionMatrixRepository;
 import com.conformal_predictors.models.entity.ConfigurationResultEntity;
+import com.conformal_predictors.models.entity.ConfusionMatrixEntity;
 import com.conformal_predictors.services.SymptomsService;
 import com.models.entity.specialist.DatasetConfigurationEntity;
 import com.models.entity.specialist.DatasetObjectsEntity;
@@ -64,6 +65,27 @@ public class DataSetConfigurationResultService {
         long finalNewId = newId;
 
         Thread thread = new Thread(() -> {
+//            confusionMatrixRepository.deleteAllByDatasetConfigurationEntity(configuration);
+//            configurationResultRepository.deleteAllByDatasetConfigurationEntity(configuration);
+
+            List<ConfusionMatrixEntity> confusionMatrix = new ArrayList<>();
+
+            for (int i = 0; i < SIGNIFICANCE.length; i++) {
+                ConfusionMatrixEntity confusionMatrixEntity = new ConfusionMatrixEntity();
+
+                confusionMatrixEntity.setEpsilon(SIGNIFICANCE[i]);
+                confusionMatrixEntity.setDatasetConfigurationEntity(configuration);
+
+                confusionMatrixEntity.setEmptyPredictions((long) 0);
+                confusionMatrixEntity.setUncertainPredictions((long) 0);
+                confusionMatrixEntity.setActivePredictedActive((long) 0);
+                confusionMatrixEntity.setActivePredictedInactive((long) 0);
+                confusionMatrixEntity.setInactivePredictedInactive((long) 0);
+                confusionMatrixEntity.setInactivePredictedActive((long) 0);
+
+                confusionMatrix.add(confusionMatrixEntity);
+            }
+
             for (int i = 0; i < testDataSet.size(); i++) {
                 ConfigurationResultEntity conformalPrediction
                         = symptomsService.getConformalPrediction(dataSet, testDataSet.get(i), configuration);
@@ -71,8 +93,36 @@ public class DataSetConfigurationResultService {
                 conformalPrediction.setDatasetObjectsEntity(testDataSet.get(i));
                 configurationResultRepository.save(conformalPrediction);
 
-                hazelCastCache.getConfigurationResultMap().put(finalNewId, i * 100 / (testDataSet.size() - 1));
+                for (int j = 0; j < SIGNIFICANCE.length; j++) {
+                    if (conformalPrediction.getAlphaPositive() < SIGNIFICANCE[j]
+                            && conformalPrediction.getAlphaNegative() < SIGNIFICANCE[j]) {
+                        confusionMatrix.get(j).setEmptyPredictions(confusionMatrix.get(j).getEmptyPredictions() + 1);
+                    } else if (conformalPrediction.getAlphaPositive() >= SIGNIFICANCE[j]
+                            && conformalPrediction.getAlphaNegative() >= SIGNIFICANCE[j]) {
+                        confusionMatrix.get(j).setUncertainPredictions(confusionMatrix.get(j).getUncertainPredictions() + 1);
+                    } else if (conformalPrediction.getRealClass() == 1
+                            && conformalPrediction.getPredictClass() == 1) {
+                        confusionMatrix.get(j).setActivePredictedActive(confusionMatrix.get(j).getActivePredictedActive() + 1);
+                    } else if (conformalPrediction.getRealClass() == -1
+                            && conformalPrediction.getPredictClass() == -1) {
+                        confusionMatrix.get(j).setInactivePredictedInactive(confusionMatrix.get(j).getInactivePredictedInactive() + 1);
+                    } else if (conformalPrediction.getRealClass() == 1
+                            && conformalPrediction.getPredictClass() == -1) {
+                        confusionMatrix.get(j).setActivePredictedInactive(confusionMatrix.get(j).getActivePredictedInactive() + 1);
+                    } else if (conformalPrediction.getRealClass() == -1
+                            && conformalPrediction.getPredictClass() == 1) {
+                        confusionMatrix.get(j).setInactivePredictedActive(confusionMatrix.get(j).getInactivePredictedActive() + 1);
+                    }
+                }
+
+                hazelCastCache.getConfigurationResultMap().put(finalNewId, i * 100 / testDataSet.size());
             }
+
+            for (int i = 0; i < SIGNIFICANCE.length; i++) {
+                confusionMatrixRepository.save(confusionMatrix.get(i));
+            }
+
+            hazelCastCache.getConfigurationResultMap().put(finalNewId, testDataSet.size() / testDataSet.size() * 100);
         });
 
         thread.start();
