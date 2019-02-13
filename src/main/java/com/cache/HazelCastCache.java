@@ -14,7 +14,9 @@ import javax.annotation.PostConstruct;
 public class HazelCastCache {
 
     private static final String INSTANCE_NAME = "doctorSystem";
-    private static final String CONFIGURATION_RESULT_MAP_NAME = "configurationResultMap";
+    private static final String CONFIGURATION_GENERAL_RESULT_MAP_NAME = "configurationGeneralResultMap";
+    private static final String CONFIGURATION_SINGLE_RESULT_MAP_NAME = "configurationSingleResultMap";
+    private static final String CONFIGURATION_ARRAY_RESULT_MAP_NAME = "configurationArrayResultMap";
     private static final String ID_GENERATOR_NAME = "idGenerator";
 
     private HazelcastInstance hazelcastInstance;
@@ -26,7 +28,7 @@ public class HazelCastCache {
         config.setInstanceName(INSTANCE_NAME);
 
         MapConfig ticketsMapConfig = new MapConfig();
-        ticketsMapConfig.setName(CONFIGURATION_RESULT_MAP_NAME);
+        ticketsMapConfig.setName(CONFIGURATION_GENERAL_RESULT_MAP_NAME);
 
         config.addMapConfig(ticketsMapConfig);
         hazelcastInstance = Hazelcast.newHazelcastInstance(config);
@@ -34,8 +36,16 @@ public class HazelCastCache {
         idGenerator = hazelcastInstance.getIdGenerator(ID_GENERATOR_NAME);
     }
 
-    public <K, V> IMap<K, V> getConfigurationResultMap() {
-        return hazelcastInstance.getMap(CONFIGURATION_RESULT_MAP_NAME);
+    public <K, V> IMap<K, V> getConfigurationGeneralResultMap() {
+        return hazelcastInstance.getMap(CONFIGURATION_GENERAL_RESULT_MAP_NAME);
+    }
+
+    public <K, V> IMap<K, V> getConfigurationSingleResultMap() {
+        return hazelcastInstance.getMap(CONFIGURATION_SINGLE_RESULT_MAP_NAME);
+    }
+
+    public <K, V> IMap<K, V> getConfigurationArrayResultMap() {
+        return hazelcastInstance.getMap(CONFIGURATION_ARRAY_RESULT_MAP_NAME);
     }
 
     public long getNewId(){

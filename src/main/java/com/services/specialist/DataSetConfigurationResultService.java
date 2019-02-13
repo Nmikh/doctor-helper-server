@@ -56,11 +56,11 @@ public class DataSetConfigurationResultService {
 
         long newId = hazelCastCache.getNewId();
 
-        while (hazelCastCache.getConfigurationResultMap().containsKey(newId)) {
+        while (hazelCastCache.getConfigurationGeneralResultMap().containsKey(newId)) {
             newId = hazelCastCache.getNewId();
         }
 
-        hazelCastCache.getConfigurationResultMap().put(newId, 0);
+        hazelCastCache.getConfigurationGeneralResultMap().put(newId, 0);
 
         long finalNewId = newId;
 
@@ -115,14 +115,14 @@ public class DataSetConfigurationResultService {
                     }
                 }
 
-                hazelCastCache.getConfigurationResultMap().put(finalNewId, i * 100 / testDataSet.size());
+                hazelCastCache.getConfigurationGeneralResultMap().put(finalNewId, i * 100 / testDataSet.size());
             }
 
             for (int i = 0; i < SIGNIFICANCE.length; i++) {
                 confusionMatrixRepository.save(confusionMatrix.get(i));
             }
 
-            hazelCastCache.getConfigurationResultMap().put(finalNewId, testDataSet.size() / testDataSet.size() * 100);
+            hazelCastCache.getConfigurationGeneralResultMap().put(finalNewId, testDataSet.size() / testDataSet.size() * 100);
         });
 
         thread.start();
@@ -131,10 +131,10 @@ public class DataSetConfigurationResultService {
     }
 
     public Integer getConfigurationTestResult(long processId) {
-        Integer percent = (Integer) hazelCastCache.getConfigurationResultMap().get(new Long(processId));
+        Integer percent = (Integer) hazelCastCache.getConfigurationGeneralResultMap().get(new Long(processId));
 
         if (percent == 100) {
-            hazelCastCache.getConfigurationResultMap().remove(new Long(processId));
+            hazelCastCache.getConfigurationGeneralResultMap().remove(new Long(processId));
         }
         return percent;
     }
@@ -142,6 +142,23 @@ public class DataSetConfigurationResultService {
     public ConfigurationResultEntity getConfigurationResultSingle(Long configurationId, DatasetObjectsEntity datasetObject){
         DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);
         List<DatasetObjectsEntity> dataSet = dataSetObjectsRepository.findByDatasetEntity(configuration.getDatasetEntity());
+
+        long newId = hazelCastCache.getNewId();
+
+        while (hazelCastCache.getConfigurationSingleResultMap().containsKey(newId)) {
+            newId = hazelCastCache.getNewId();
+        }
+
+        hazelCastCache.getConfigurationGeneralResultMap().put(newId, 0);
+
+        long finalNewId = newId;
+
+        Thread thread = new Thread(() -> {
+            ConfigurationResultEntity conformalPrediction
+                    = symptomsService.getConformalPrediction((ArrayList<DatasetObjectsEntity>) dataSet, datasetObject, configuration);
+        });
+        thread.start();
+
 
         return symptomsService.getConformalPrediction((ArrayList<DatasetObjectsEntity>) dataSet, datasetObject, configuration);
     }
