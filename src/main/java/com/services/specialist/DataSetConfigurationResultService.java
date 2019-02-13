@@ -138,4 +138,11 @@ public class DataSetConfigurationResultService {
         }
         return percent;
     }
+
+    public ConfigurationResultEntity getConfigurationResultSingle(Long configurationId, DatasetObjectsEntity datasetObject){
+        DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);
+        List<DatasetObjectsEntity> dataSet = dataSetObjectsRepository.findByDatasetEntity(configuration.getDatasetEntity());
+
+        return symptomsService.getConformalPrediction((ArrayList<DatasetObjectsEntity>) dataSet, datasetObject, configuration);
+    }
 }
