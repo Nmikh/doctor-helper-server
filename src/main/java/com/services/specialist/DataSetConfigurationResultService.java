@@ -65,8 +65,8 @@ public class DataSetConfigurationResultService {
         long finalNewId = newId;
 
         Thread thread = new Thread(() -> {
-//            confusionMatrixRepository.deleteAllByDatasetConfigurationEntity(configuration);
-//            configurationResultRepository.deleteAllByDatasetConfigurationEntity(configuration);
+            confusionMatrixRepository.deleteAllByDatasetConfigurationEntity(configuration);
+            configurationResultRepository.deleteAllByDatasetConfigurationEntity(configuration);
 
             List<ConfusionMatrixEntity> confusionMatrix = new ArrayList<>();
 

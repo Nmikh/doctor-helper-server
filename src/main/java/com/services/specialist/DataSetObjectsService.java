@@ -2,6 +2,9 @@ package com.services.specialist;
 
 import com.DAO.specialist.DataSetObjectsRepository;
 import com.DAO.specialist.SpecialistRepository;
+import com.conformal_predictors.DAO.ConfigurationResultRepository;
+import com.conformal_predictors.DAO.ConfusionMatrixRepository;
+import com.models.entity.specialist.DatasetConfigurationEntity;
 import com.models.entity.specialist.DatasetEntity;
 import com.models.entity.specialist.DatasetObjectsEntity;
 import com.models.entity.specialist.SpecialistEntity;
@@ -26,6 +29,15 @@ public class DataSetObjectsService {
     @Autowired
     DataSetObjectsRepository dataSetObjectsRepository;
 
+    @Autowired
+    ConfigurationService configurationService;
+
+    @Autowired
+    ConfigurationResultRepository configurationResultRepository;
+
+    @Autowired
+    ConfusionMatrixRepository confusionMatrixRepository;
+
     public String getDatSet(Long dataSetId) {
         DatasetEntity dataSet = dataSetService.getDataSetById(dataSetId);
         List<DatasetObjectsEntity> objects = dataSetObjectsRepository.findByDatasetEntity(dataSet);
@@ -47,10 +59,15 @@ public class DataSetObjectsService {
             return false;
         }
 
+        List<DatasetConfigurationEntity> allConfigurationsByDataSet = configurationService.getAllConfigurationsByDataSetId(dataSetId);
+        for (int i = 0; i < allConfigurationsByDataSet.size(); i++) {
+            confusionMatrixRepository.deleteAllByDatasetConfigurationEntity(allConfigurationsByDataSet.get(i));
+            configurationResultRepository.deleteAllByDatasetConfigurationEntity(allConfigurationsByDataSet.get(i));
+        }
+
         dataSetObjectsRepository.deleteDatasetObjectsEntitiesByDatasetEntity(dataSet);
 
         List<DatasetObjectsEntity> dataSetObjectsFromFile = getDataSetObjectsFromFile(file, dataSet);
-
         dataSetObjectsRepository.saveAll(dataSetObjectsFromFile);
 
         return true;
