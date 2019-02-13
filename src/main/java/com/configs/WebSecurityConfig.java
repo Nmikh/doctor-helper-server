@@ -30,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/doctor-system/doctor/registration/*",
                         "/doctor-system/doctor/specializations",
                         "/v2/api-docs/**",
+                        "/swagger-ui.html",
                         "/swagger-ui.html/**",
                         "/swagger-ui.html#/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()

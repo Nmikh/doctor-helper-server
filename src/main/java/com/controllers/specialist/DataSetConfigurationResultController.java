@@ -47,16 +47,19 @@ public class DataSetConfigurationResultController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/doctor-system/specialist/result/general/{configutration_id}/start")
+    @PostMapping("/doctor-system/specialist/result/simple/{configutration_id}/start")
     public ResponseEntity startConfigutrationTestOnSingleObject(
             @PathVariable("configutration_id") Long configurationId,
-            @RequestBody DatasetObjectsEntity datasetObject,
+            @RequestBody String params,
             Principal principal) {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
         if (specialistEntity == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
+        DatasetObjectsEntity datasetObject = new DatasetObjectsEntity();
+        datasetObject.setParams(params);
+        datasetObject.setObjectClass((long) 0);
 
         return new ResponseEntity(dataSetConfigurationResultService.getConfigurationResultSingle(configurationId, datasetObject) ,HttpStatus.OK);
     }
