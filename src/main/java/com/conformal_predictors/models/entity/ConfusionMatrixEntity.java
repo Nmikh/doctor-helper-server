@@ -1,5 +1,6 @@
 package com.conformal_predictors.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.models.entity.specialist.DatasetConfigurationEntity;
 
 import javax.persistence.*;
@@ -40,6 +41,7 @@ public class ConfusionMatrixEntity {
     @Column(name = "UNCERTAIN_PREDICTIONS", nullable = true)
     private Long uncertainPredictions;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CONFIGURATION_ID")
     private DatasetConfigurationEntity datasetConfigurationEntity;

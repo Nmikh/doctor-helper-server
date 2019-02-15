@@ -1,5 +1,6 @@
 package com.conformal_predictors.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.models.entity.specialist.DatasetConfigurationEntity;
 import com.models.entity.specialist.DatasetObjectsEntity;
 
@@ -45,6 +46,7 @@ public class ConfigurationResultEntity {
     @Column(name = "ALPHA_NEGATIVE", nullable = true, precision = 0)
     private Double alphaNegative;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CONFIGURATION_ID")
     private DatasetConfigurationEntity datasetConfigurationEntity;

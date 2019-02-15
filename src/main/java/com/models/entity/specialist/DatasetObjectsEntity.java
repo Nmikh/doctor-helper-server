@@ -1,5 +1,7 @@
 package com.models.entity.specialist;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -19,6 +21,7 @@ public class DatasetObjectsEntity {
     @Column(name = "OBJECT_CLASS")
     private Long objectClass;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "DATASET_ID")
     private DatasetEntity datasetEntity;

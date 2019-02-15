@@ -2,14 +2,18 @@ package com.services.specialist;
 
 import com.DAO.specialist.DataSetObjectsRepository;
 import com.cache.HazelCastCache;
+import com.conformal_predictors.DAO.ConfigurationResultPaginationRepository;
 import com.conformal_predictors.DAO.ConfigurationResultRepository;
 import com.conformal_predictors.DAO.ConfusionMatrixRepository;
+import com.conformal_predictors.models.ConfigurationResultPage;
 import com.conformal_predictors.models.entity.ConfigurationResultEntity;
 import com.conformal_predictors.models.entity.ConfusionMatrixEntity;
 import com.conformal_predictors.services.SymptomsService;
 import com.models.entity.specialist.DatasetConfigurationEntity;
 import com.models.entity.specialist.DatasetObjectsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,6 +37,9 @@ public class DataSetConfigurationResultService {
 
     @Autowired
     ConfigurationResultRepository configurationResultRepository;
+
+    @Autowired
+    ConfigurationResultPaginationRepository configurationResultPaginationRepository;
 
     @Autowired
     ConfusionMatrixRepository confusionMatrixRepository;
@@ -139,7 +146,8 @@ public class DataSetConfigurationResultService {
         return percent;
     }
 
-    public ConfigurationResultEntity getConfigurationResultSingle(Long configurationId, DatasetObjectsEntity datasetObject){
+    //todo
+    public ConfigurationResultEntity getConfigurationResultSingle(Long configurationId, DatasetObjectsEntity datasetObject) {
         DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);
         List<DatasetObjectsEntity> dataSet = dataSetObjectsRepository.findByDatasetEntity(configuration.getDatasetEntity());
 
@@ -161,5 +169,21 @@ public class DataSetConfigurationResultService {
 
 
         return symptomsService.getConformalPrediction((ArrayList<DatasetObjectsEntity>) dataSet, datasetObject, configuration);
+    }
+
+    public List<ConfusionMatrixEntity> getConfusionMatrix(Long configurationId) {
+        DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);
+        return confusionMatrixRepository.findByDatasetConfigurationEntityOrderByEpsilonAsc(configuration);
+    }
+
+    public List<ConfigurationResultEntity> getConfigurationResult(Long configurationId) {
+        DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);
+        return configurationResultRepository.findByDatasetConfigurationEntityOrderById(configuration);
+    }
+
+    public ConfigurationResultPage getConfigurationResultPage(Long configurationId, int page, int objectsOnPage) {
+        DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);
+        Page<ConfigurationResultEntity> configurationResultPage = configurationResultPaginationRepository.findByDatasetConfigurationEntityOrderById(configuration, new PageRequest(--page, objectsOnPage));
+        return new ConfigurationResultPage(configurationResultPage.getTotalPages(), configurationResultPage.getContent());
     }
 }
