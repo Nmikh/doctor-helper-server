@@ -247,8 +247,7 @@ public class DataSetConfigurationResultService {
         return configurationPartResult;
     }
 
-    //todo
-    public ConfigurationResultEntity getConfigurationResultSingle(Long configurationId, DatasetObjectsEntity datasetObject) {
+    public long startConfigurationSingleTest(Long configurationId, DatasetObjectsEntity datasetObject, Double significance) {
         DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);
         List<DatasetObjectsEntity> dataSet = dataSetObjectsRepository.findByDatasetEntity(configuration.getDatasetEntity());
 
@@ -258,19 +257,38 @@ public class DataSetConfigurationResultService {
             newId = hazelCastCache.getNewId();
         }
 
-        hazelCastCache.getConfigurationGeneralResultMap().put(newId, 0);
+        hazelCastCache.getConfigurationSingleResultMap().put(newId, new ConfigurationResultEntity());
 
         long finalNewId = newId;
 
         Thread thread = new Thread(() -> {
             ConfigurationResultEntity conformalPrediction
                     = symptomsService.getConformalPrediction((ArrayList<DatasetObjectsEntity>) dataSet, datasetObject, configuration);
+
+            if (significance != null) {
+                if ((conformalPrediction.getpPositive() >= significance && conformalPrediction.getpNegative() >= significance)
+                        || (conformalPrediction.getpPositive() < significance && conformalPrediction.getpNegative() < significance)) {
+                    conformalPrediction.setRealClass((long) 2);
+                } else {
+                    conformalPrediction.setRealClass(conformalPrediction.getPredictClass());
+                }
+            }
+            hazelCastCache.getConfigurationSingleResultMap().put(finalNewId, conformalPrediction);
         });
         thread.start();
 
-
-        return symptomsService.getConformalPrediction((ArrayList<DatasetObjectsEntity>) dataSet, datasetObject, configuration);
+        return newId;
     }
+
+    public ConfigurationResultEntity getConfigurationSingleTestResult(long processId) {
+        ConfigurationResultEntity configurationResult = (ConfigurationResultEntity) hazelCastCache.getConfigurationSingleResultMap().get(new Long(processId));
+
+        if (configurationResult.getPredictClass() != null) {
+            hazelCastCache.getConfigurationSingleResultMap().remove(new Long(processId));
+        }
+        return configurationResult;
+    }
+
 
     public List<ConfusionMatrixEntity> getConfusionMatrix(Long configurationId) {
         DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);

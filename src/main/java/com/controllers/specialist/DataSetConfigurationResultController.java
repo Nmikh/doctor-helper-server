@@ -80,24 +80,6 @@ public class DataSetConfigurationResultController {
                 HttpStatus.OK);
     }
 
-    //todo
-    @PostMapping("/doctor-system/specialist/result/single/{configutration_id}/start")
-    public ResponseEntity startConfigutrationTestOnSingleObject(
-            @PathVariable("configutration_id") Long configurationId,
-            @RequestBody String params,
-            Principal principal) {
-        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
-        if (specialistEntity == null) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-
-        DatasetObjectsEntity datasetObject = new DatasetObjectsEntity();
-        datasetObject.setParams(params);
-        datasetObject.setObjectClass((long) 0);
-
-        return new ResponseEntity(dataSetConfigurationResultService.getConfigurationResultSingle(configurationId, datasetObject), HttpStatus.OK);
-    }
-
     @GetMapping("/doctor-system/specialist/result/general/{configutration_id}/confusion_matrix")
     public ResponseEntity getConfusionMatrix(
             @PathVariable("configutration_id") Long configurationId,
