@@ -2,9 +2,10 @@ package com.models.specialist;
 
 import com.models.entity.specialist.DatasetEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class DataSetPage {
+public class DataSetPage implements Serializable {
     private int numberOfPages;
     private List<DatasetEntity> datasetEntities;
 

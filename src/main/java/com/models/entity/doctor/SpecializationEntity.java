@@ -1,10 +1,11 @@
 package com.models.entity.doctor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "SPECIALIZATION")
-public class SpecializationEntity {
+public class SpecializationEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)

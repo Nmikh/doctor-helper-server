@@ -1,6 +1,8 @@
 package com.models.specialist;
 
-public class ConfigurationGet {
+import java.io.Serializable;
+
+public class ConfigurationGet implements Serializable {
 
     private String name;
     private Double eps;

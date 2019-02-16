@@ -1,6 +1,8 @@
 package com.models.specialist;
 
-public class Specialist {
+import java.io.Serializable;
+
+public class Specialist implements Serializable {
     private String name;
     private String surname;
     private String login;

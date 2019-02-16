@@ -2,9 +2,10 @@ package com.models.doctor;
 
 import com.models.entity.doctor.PatientEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PatientPageReturn {
+public class PatientPageReturn implements Serializable {
     private int numberOfPages;
     private List<PatientEntity> patientEntities;
 

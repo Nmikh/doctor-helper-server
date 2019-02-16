@@ -1,6 +1,8 @@
 package com.models.doctor;
 
-public class Doctor {
+import java.io.Serializable;
+
+public class Doctor implements Serializable {
     private String name;
     private String surname;
     private String login;

@@ -2,9 +2,10 @@ package com.models.doctor;
 
 import com.models.entity.doctor.PageEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PagesPageReturn {
+public class PagesPageReturn implements Serializable {
     private int numberOfPages;
     private List<PageEntity> pageEntities;
 

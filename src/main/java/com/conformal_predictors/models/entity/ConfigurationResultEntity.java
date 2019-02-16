@@ -5,10 +5,11 @@ import com.models.entity.specialist.DatasetConfigurationEntity;
 import com.models.entity.specialist.DatasetObjectsEntity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "CONFIGURATION_RESULT")
-public class ConfigurationResultEntity {
+public class ConfigurationResultEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)

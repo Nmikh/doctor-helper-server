@@ -3,11 +3,12 @@ package com.models.entity.specialist;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "DATASET_OBJECTS")
-public class DatasetObjectsEntity {
+public class DatasetObjectsEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

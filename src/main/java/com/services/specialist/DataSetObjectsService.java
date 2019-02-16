@@ -73,7 +73,7 @@ public class DataSetObjectsService {
         return true;
     }
 
-    private List<DatasetObjectsEntity> getDataSetObjectsFromFile(MultipartFile file, DatasetEntity dataSet) throws IOException {
+    public List<DatasetObjectsEntity> getDataSetObjectsFromFile(MultipartFile file, DatasetEntity dataSet) throws IOException {
         ArrayList<DatasetObjectsEntity> dataSetObjectsEntities = new ArrayList<>();
 
         List<String> strings = Arrays.asList(new String(file.getBytes()).split("\r\n"));

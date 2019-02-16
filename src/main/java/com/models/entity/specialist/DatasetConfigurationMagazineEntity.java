@@ -1,12 +1,13 @@
 package com.models.entity.specialist;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Table(name = "DATASET_CONFIGURATION_MAGAZINE")
-public class DatasetConfigurationMagazineEntity {
+public class DatasetConfigurationMagazineEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

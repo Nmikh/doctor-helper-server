@@ -2,9 +2,10 @@ package com.conformal_predictors.models;
 
 import com.conformal_predictors.models.entity.ConfigurationResultEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ConfigurationResultPage {
+public class ConfigurationResultPage implements Serializable {
     private int numberOfPages;
     private List<ConfigurationResultEntity> configurationResultEntities;
 

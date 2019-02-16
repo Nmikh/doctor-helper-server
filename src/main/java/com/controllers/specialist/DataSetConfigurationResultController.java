@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
 
@@ -25,7 +27,9 @@ public class DataSetConfigurationResultController {
     SpecialistService specialistService;
 
     @PostMapping("/doctor-system/specialist/result/general/{configutration_id}/start")
-    public ResponseEntity startConfigutrationTest(@PathVariable("configutration_id") Long configurationId, Principal principal) {
+    public ResponseEntity startConfigutrationTest(
+            @PathVariable("configutration_id") Long configurationId,
+            Principal principal) {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
         if (specialistEntity == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
@@ -36,7 +40,9 @@ public class DataSetConfigurationResultController {
     }
 
     @GetMapping("/doctor-system/specialist/result/general/{process_id}/start")
-    public ResponseEntity getStartConfigutrationtResult(@PathVariable("process_id") Long processId, Principal principal) {
+    public ResponseEntity getStartConfigutrationtResult(
+            @PathVariable("process_id") Long processId,
+            Principal principal) {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
         if (specialistEntity == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
@@ -47,8 +53,35 @@ public class DataSetConfigurationResultController {
                 HttpStatus.OK);
     }
 
+    @PostMapping("/doctor-system/specialist/result/part/{configutration_id}/start")
+    public ResponseEntity startConfigutrationPartTest(
+            @PathVariable("configutration_id") Long configurationId,
+            @RequestParam("file") MultipartFile file,
+            Principal principal) throws IOException {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        } else if (file.isEmpty()) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(dataSetConfigurationResultService.startConfigurationPartTest(file, configurationId),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/doctor-system/specialist/result/part/{process_id}/start")
+    public ResponseEntity getStartConfigutrationtPartResult(@PathVariable("process_id") Long processId, Principal principal) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity(dataSetConfigurationResultService.getConfigurationPartTestResult(processId),
+                HttpStatus.OK);
+    }
+
     //todo
-    @PostMapping("/doctor-system/specialist/result/simple/{configutration_id}/start")
+    @PostMapping("/doctor-system/specialist/result/single/{configutration_id}/start")
     public ResponseEntity startConfigutrationTestOnSingleObject(
             @PathVariable("configutration_id") Long configurationId,
             @RequestBody String params,

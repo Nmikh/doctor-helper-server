@@ -3,11 +3,12 @@ package com.models.entity.specialist;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "SVM_KERNEL_PARAMETRS")
-public class SvmKernelParametrsEntity {
+public class SvmKernelParametrsEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")

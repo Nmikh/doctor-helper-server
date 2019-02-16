@@ -1,11 +1,12 @@
 package com.models.entity.specialist;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "DATASET_CONFIGURATION")
-public class DatasetConfigurationEntity {
+public class DatasetConfigurationEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
