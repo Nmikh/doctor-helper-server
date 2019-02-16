@@ -1,5 +1,6 @@
 package com.services.specialist;
 
+import com.DAO.specialist.ConfigurationRepository;
 import com.DAO.specialist.DataSetPaginationRepository;
 import com.DAO.specialist.DataSetRepository;
 import com.models.entity.specialist.DatasetConfigurationEntity;
@@ -24,6 +25,18 @@ public class DataSetService {
 
     @Autowired
     ConfigurationService configurationService;
+
+    @Autowired
+    MagazineService magazineService;
+
+    @Autowired
+    DataSetConfigurationResultService dataSetConfigurationResultService;
+
+    @Autowired
+    ConfigurationRepository configurationRepository;
+
+    @Autowired
+    DataSetObjectsService dataSetObjectsService;
 
     public Long createDataSet(DatasetEntity datasetEntity, SpecialistEntity specialistEntity) {
         datasetEntity.setActive(false);
@@ -59,6 +72,26 @@ public class DataSetService {
         dataSet.setActive(dataSetActivate);
 
         dataSetRepository.save(dataSet);
+        return true;
+    }
+
+    public boolean deleteDataSet(SpecialistEntity specialistEntity, Long dataSetId) {
+        DatasetEntity dataSet = dataSetRepository.findById(dataSetId).get();
+
+        if (specialistEntity.getId() != dataSet.getSpecialistEntity().getId()) {
+            return false;
+        }
+
+        List<DatasetConfigurationEntity> allConfigurations = configurationService.getAllConfigurationsByDataSetId(dataSetId);
+        for (int i = 0; i < allConfigurations.size(); i++) {
+            magazineService.removeConfiguration(allConfigurations.get(i));
+            dataSetConfigurationResultService.removeAllResults(allConfigurations.get(i));
+            configurationRepository.delete(allConfigurations.get(i));
+        }
+
+        dataSetObjectsService.removeDataSetObjects(dataSetId);
+        dataSetRepository.delete(dataSet);
+
         return true;
     }
 

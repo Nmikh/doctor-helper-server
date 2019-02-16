@@ -99,7 +99,7 @@ public class DataSetController {
         }
 
         return new ResponseEntity(
-                dataSetService.getSpecialistDataSetAllPage(specialistEntity,page, objectsOnPage),
+                dataSetService.getSpecialistDataSetAllPage(specialistEntity, page, objectsOnPage),
                 HttpStatus.OK);
     }
 
@@ -128,6 +128,20 @@ public class DataSetController {
         }
 
         if (dataSetService.activateDataSet(specialistEntity, dataSetId, dataSetActivate)) {
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @DeleteMapping("/doctor-system/specialist/dataset/{dataset_id}")
+    public ResponseEntity deleteDataSet(Principal principal,
+                                        @PathVariable("dataset_id") Long dataSetId) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        if (dataSetService.deleteDataSet(specialistEntity, dataSetId)) {
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);

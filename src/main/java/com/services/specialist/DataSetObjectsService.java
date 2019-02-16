@@ -52,6 +52,12 @@ public class DataSetObjectsService {
         return result;
     }
 
+    public void removeDataSetObjects(Long dataSetId) {
+        DatasetEntity dataSet = dataSetService.getDataSetById(dataSetId);
+        List<DatasetObjectsEntity> objects = dataSetObjectsRepository.findByDatasetEntity(dataSet);
+        dataSetObjectsRepository.deleteAll(objects);
+    }
+
     public boolean addDataObjectsToDataSet(MultipartFile file, SpecialistEntity specialistEntity, Long dataSetId) throws IOException {
         DatasetEntity dataSet = dataSetService.getDataSetById(dataSetId);
 
