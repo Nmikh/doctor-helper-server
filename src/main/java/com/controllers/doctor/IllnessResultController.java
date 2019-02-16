@@ -4,8 +4,8 @@ import com.models.entity.doctor.DoctorEntity;
 import com.models.entity.specialist.DatasetObjectsEntity;
 import com.models.specialist.ConfigurationSingleResultGet;
 import com.services.doctor.DoctorService;
-import com.services.doctor.IllnessResultService;
 import com.services.specialist.DataSetConfigurationResultService;
+import com.services.specialist.DataSetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class IllnessResultController {
     DoctorService doctorService;
 
     @Autowired
-    IllnessResultService illnessResultService;
+    DataSetService dataSetService;
 
     @Autowired
     DataSetConfigurationResultService dataSetConfigurationResultService;
@@ -33,12 +33,11 @@ public class IllnessResultController {
     @GetMapping("/doctor-system/doctor/illness/datasets")
     public ResponseEntity getAllActiveDataSets(Principal principal) {
         DoctorEntity doctor = doctorService.findDoctorByLogin(principal.getName());
-
         if (doctor == null) {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        return new ResponseEntity(illnessResultService.getAllWorkDataSets(), HttpStatus.OK);
+        return new ResponseEntity(dataSetService.getAllWorkDataSets(), HttpStatus.OK);
     }
 
     @PostMapping("/doctor-system/doctor/illness/result/{configutration_id}/start")

@@ -1,6 +1,7 @@
 package com.services.specialist;
 
 import com.DAO.specialist.MagazineRepository;
+import com.models.entity.specialist.DatasetConfigurationEntity;
 import com.models.entity.specialist.DatasetConfigurationMagazineEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,15 @@ public class MagazineService {
             magazine.add(magazineRepository.findById(magazineRowsId.get(i).longValue()).get());
         }
         return magazine;
+    }
+
+    public void removeConfiguration(DatasetConfigurationEntity datasetConfigurationEntity) {
+        List<BigInteger> magazineId = magazineRepository.findMagazineIdByConfigurationBeforeAndAfter(
+                datasetConfigurationEntity.getId(), datasetConfigurationEntity.getId());
+
+        for (int i = 0; i < magazineId.size(); i++) {
+            magazineRepository.deleteById(new Long(String.valueOf(magazineId.get(i))));
+        }
     }
 
 }

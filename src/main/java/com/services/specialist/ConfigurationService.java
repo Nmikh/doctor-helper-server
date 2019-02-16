@@ -32,6 +32,9 @@ public class ConfigurationService {
     @Autowired
     MagazineService magazineService;
 
+    @Autowired
+    DataSetConfigurationResultService dataSetConfigurationResultService;
+
     public Long createConfiguration(ConfigurationGet configurationGet, Long dataSetId, SpecialistEntity specialistEntity) {
         DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
 
@@ -156,5 +159,19 @@ public class ConfigurationService {
 
     public DatasetConfigurationEntity findActiveConfiguration(DatasetEntity datasetEntity){
         return configurationRepository.findByDatasetEntityAndActiveTrue(datasetEntity);
+    }
+
+    public boolean removeConfiguration(Long configurationId, SpecialistEntity specialistEntity){
+        DatasetConfigurationEntity datasetConfiguration = configurationRepository.findById(configurationId).get();
+
+        if(datasetConfiguration.getSpecialistEntity().getId() != specialistEntity.getId()){
+            return false;
+        }
+
+        magazineService.removeConfiguration(datasetConfiguration);
+        dataSetConfigurationResultService.removeAllResults(datasetConfiguration);
+        configurationRepository.delete(datasetConfiguration);
+
+        return true;
     }
 }

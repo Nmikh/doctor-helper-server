@@ -289,7 +289,6 @@ public class DataSetConfigurationResultService {
         return configurationResult;
     }
 
-
     public List<ConfusionMatrixEntity> getConfusionMatrix(Long configurationId) {
         DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);
         return confusionMatrixRepository.findByDatasetConfigurationEntityOrderByEpsilonAsc(configuration);
@@ -304,5 +303,10 @@ public class DataSetConfigurationResultService {
         DatasetConfigurationEntity configuration = configurationService.getConfigurationById(configurationId);
         Page<ConfigurationResultEntity> configurationResultPage = configurationResultPaginationRepository.findByDatasetConfigurationEntityOrderById(configuration, new PageRequest(--page, objectsOnPage));
         return new ConfigurationResultPage(configurationResultPage.getTotalPages(), configurationResultPage.getContent());
+    }
+
+    public void removeAllResults(DatasetConfigurationEntity datasetConfigurationEntity){
+        confusionMatrixRepository.deleteAllByDatasetConfigurationEntity(datasetConfigurationEntity);
+        configurationResultRepository.deleteAllByDatasetConfigurationEntity(datasetConfigurationEntity);
     }
 }

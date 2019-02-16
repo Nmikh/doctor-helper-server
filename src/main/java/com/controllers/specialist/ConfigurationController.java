@@ -135,6 +135,21 @@ public class ConfigurationController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @DeleteMapping("/doctor-system/specialist/configuration/{configuration_id}")
+    public ResponseEntity deleteDataSetConfiguration(Principal principal, @PathVariable("configuration_id") Long configurationId) {
+        SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());
+        if (specialistEntity == null) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        if (!configurationService.removeConfiguration(configurationId, specialistEntity)) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
     @GetMapping("/doctor-system/specialist/configuration/svm")
     public ResponseEntity getAllSvmTypes(Principal principal) {
         SpecialistEntity specialistEntity = specialistService.findSpecialistByLogin(principal.getName());

@@ -2,6 +2,7 @@ package com.services.specialist;
 
 import com.DAO.specialist.DataSetPaginationRepository;
 import com.DAO.specialist.DataSetRepository;
+import com.models.entity.specialist.DatasetConfigurationEntity;
 import com.models.entity.specialist.DatasetEntity;
 import com.models.entity.specialist.SpecialistEntity;
 import com.models.specialist.DataSetPage;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +21,9 @@ public class DataSetService {
 
     @Autowired
     DataSetPaginationRepository dataSetPaginationRepository;
+
+    @Autowired
+    ConfigurationService configurationService;
 
     public Long createDataSet(DatasetEntity datasetEntity, SpecialistEntity specialistEntity) {
         datasetEntity.setActive(false);
@@ -80,7 +85,19 @@ public class DataSetService {
         return new DataSetPage(dataSetpage.getTotalPages(), dataSetpage.getContent());
     }
 
-    public List<DatasetEntity> findAllActiveDataSets(){
-        return dataSetRepository.findAllByActiveTrue();
+    public List<DatasetEntity> getAllWorkDataSets() {
+        ArrayList<DatasetEntity> allActiveConfigurationDataSets = new ArrayList<>();
+
+        List<DatasetEntity> allActiveDataSets = dataSetRepository.findAllByActiveTrue();
+
+        for (DatasetEntity dataSet : allActiveDataSets) {
+            DatasetConfigurationEntity activeConfiguration = configurationService.findActiveConfiguration(dataSet);
+
+            if (activeConfiguration != null) {
+                dataSet.setId(activeConfiguration.getId());
+                allActiveConfigurationDataSets.add(dataSet);
+            }
+        }
+        return allActiveConfigurationDataSets;
     }
 }
