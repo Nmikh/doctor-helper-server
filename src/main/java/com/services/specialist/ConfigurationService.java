@@ -38,7 +38,7 @@ public class ConfigurationService {
     public Long createConfiguration(ConfigurationGet configurationGet, Long dataSetId, SpecialistEntity specialistEntity) {
         DatasetEntity dataSetById = dataSetService.getDataSetById(dataSetId);
 
-        SvmKernelParametrsEntity svmParam = svmKernelParamsRepository.findById(configurationGet.getSvmParametr()).get();
+        SvmKernelParametrsEntity svmParam = svmKernelParamsRepository.findById(configurationGet.getSvmParameter()).get();
         SvmKernelParametrsEntity kernelParam = svmKernelParamsRepository.findById(configurationGet.getKernelParametr()).get();
 
         DatasetConfigurationEntity datasetConfigurationEntity = new DatasetConfigurationEntity();
@@ -69,7 +69,7 @@ public class ConfigurationService {
             return false;
         }
 
-        SvmKernelParametrsEntity svmParam = svmKernelParamsRepository.findById(configurationGet.getSvmParametr()).get();
+        SvmKernelParametrsEntity svmParam = svmKernelParamsRepository.findById(configurationGet.getSvmParameter()).get();
         SvmKernelParametrsEntity kernelParam = svmKernelParamsRepository.findById(configurationGet.getKernelParametr()).get();
 
         datasetConfigurationEntity.setActive(false);
