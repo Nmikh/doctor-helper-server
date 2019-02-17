@@ -13,7 +13,7 @@ public class ConfigurationGet implements Serializable {
     private Double nu;
     private Double testPart;
     private Long svmParameter;
-    private Long kernelParametr;
+    private Long kernelParameter;
 
     public String getName() {
         return name;
@@ -87,11 +87,11 @@ public class ConfigurationGet implements Serializable {
         this.svmParameter = svmParameter;
     }
 
-    public Long getKernelParametr() {
-        return kernelParametr;
+    public Long getKernelParameter() {
+        return kernelParameter;
     }
 
-    public void setKernelParametr(Long kernelParametr) {
-        this.kernelParametr = kernelParametr;
+    public void setKernelParameter(Long kernelParameter) {
+        this.kernelParameter = kernelParameter;
     }
 }
