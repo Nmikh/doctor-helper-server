@@ -54,8 +54,8 @@ public class ConfigurationService {
         datasetConfigurationEntity.setTestPart(configurationGet.getTestPart());
 
         datasetConfigurationEntity.setDatasetEntity(dataSetById);
-        datasetConfigurationEntity.setKernelParametr(kernelParam);
-        datasetConfigurationEntity.setSvmParametr(svmParam);
+        datasetConfigurationEntity.setKernelParameter(kernelParam);
+        datasetConfigurationEntity.setSvmParameter(svmParam);
         datasetConfigurationEntity.setSpecialistEntity(specialistEntity);
 
         DatasetConfigurationEntity save = configurationRepository.save(datasetConfigurationEntity);
@@ -82,8 +82,8 @@ public class ConfigurationService {
         datasetConfigurationEntity.setName(configurationGet.getName());
         datasetConfigurationEntity.setTestPart(configurationGet.getTestPart());
 
-        datasetConfigurationEntity.setKernelParametr(kernelParam);
-        datasetConfigurationEntity.setSvmParametr(svmParam);
+        datasetConfigurationEntity.setKernelParameter(kernelParam);
+        datasetConfigurationEntity.setSvmParameter(svmParam);
         datasetConfigurationEntity.setSpecialistEntity(specialistEntity);
 
         DatasetConfigurationEntity save = configurationRepository.save(datasetConfigurationEntity);

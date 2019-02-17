@@ -50,11 +50,11 @@ public class DatasetConfigurationEntity implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SVM_TYPE_ID")
-    private SvmKernelParametrsEntity svmParametr;
+    private SvmKernelParametrsEntity svmParameter;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "KERNEL_TYPE_ID")
-    private SvmKernelParametrsEntity kernelParametr;
+    private SvmKernelParametrsEntity kernelParameter;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "DATASET_ID")
@@ -144,20 +144,20 @@ public class DatasetConfigurationEntity implements Serializable {
         this.testPart = testPart;
     }
 
-    public SvmKernelParametrsEntity getSvmParametr() {
-        return svmParametr;
+    public SvmKernelParametrsEntity getSvmParameter() {
+        return svmParameter;
     }
 
-    public void setSvmParametr(SvmKernelParametrsEntity svmParametr) {
-        this.svmParametr = svmParametr;
+    public void setSvmParameter(SvmKernelParametrsEntity svmParametr) {
+        this.svmParameter = svmParametr;
     }
 
-    public SvmKernelParametrsEntity getKernelParametr() {
-        return kernelParametr;
+    public SvmKernelParametrsEntity getKernelParameter() {
+        return kernelParameter;
     }
 
-    public void setKernelParametr(SvmKernelParametrsEntity kernelParametr) {
-        this.kernelParametr = kernelParametr;
+    public void setKernelParameter(SvmKernelParametrsEntity kernelParametr) {
+        this.kernelParameter = kernelParametr;
     }
 
     public DatasetEntity getDatasetEntity() {

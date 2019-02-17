@@ -239,7 +239,7 @@ public class SymptomsService {
         param.eps = datasetConfiguration.getEps();
         param.degree = datasetConfiguration.getDegree().intValue();
 
-        switch (datasetConfiguration.getKernelParametr().getName()) {
+        switch (datasetConfiguration.getKernelParameter().getName()) {
             case (LINEAR):
                 param.kernel_type = svm_parameter.LINEAR;
                 break;
@@ -257,7 +257,7 @@ public class SymptomsService {
                 break;
         }
 
-        switch (datasetConfiguration.getSvmParametr().getName()) {
+        switch (datasetConfiguration.getSvmParameter().getName()) {
             case (C_SVC):
                 param.svm_type = svm_parameter.C_SVC;
                 break;
