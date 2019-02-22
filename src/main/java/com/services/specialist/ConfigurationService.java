@@ -149,7 +149,7 @@ public class ConfigurationService {
         datasetConfigurationMagazineEntity.setDatasetConfigurationAfter(datasetConfigurationAfter);
         datasetConfigurationMagazineEntity.setSpecialistEntity(specialistEntity);
 
-        magazineService.createMagazineRow(datasetConfigurationMagazineEntity);
+//        magazineService.createMagazineRow(datasetConfigurationMagazineEntity);
         return true;
     }
 
