@@ -30,8 +30,8 @@ public class MagazineService {
     }
 
     public void removeConfiguration(DatasetConfigurationEntity datasetConfigurationEntity) {
-        List<BigInteger> magazineId = magazineRepository.findMagazineIdByConfigurationBeforeAndAfter(
-                datasetConfigurationEntity.getId(), datasetConfigurationEntity.getId());
+        List<BigInteger> magazineId = magazineRepository.findMagazineIdByConfigurationBefore(datasetConfigurationEntity.getId());
+        magazineId.addAll(magazineRepository.findMagazineIdByConfigurationAfter(datasetConfigurationEntity.getId()));
 
         for (int i = 0; i < magazineId.size(); i++) {
             magazineRepository.deleteById(new Long(String.valueOf(magazineId.get(i))));

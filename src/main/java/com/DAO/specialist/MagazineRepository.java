@@ -28,8 +28,12 @@ public interface MagazineRepository extends JpaRepository<DatasetConfigurationMa
 
     @Query(value = "SELECT DATASET_CONFIGURATION_MAGAZINE.ID " +
             "FROM DATASET_CONFIGURATION_MAGAZINE " +
-            "WHERE DATASET_CONFIGURATION_MAGAZINE.CONFIGURATION_ID_AFTER = ?1 " +
-            "AND DATASET_CONFIGURATION_MAGAZINE.CONFIGURATION_ID_BEFORE = ?2", nativeQuery = true)
-    List findMagazineIdByConfigurationBeforeAndAfter(Long idAfter, Long idBefore);
+            "WHERE DATASET_CONFIGURATION_MAGAZINE.CONFIGURATION_ID_BEFORE = ?1 ", nativeQuery = true)
+    List findMagazineIdByConfigurationBefore(Long idAfter);
+
+    @Query(value = "SELECT DATASET_CONFIGURATION_MAGAZINE.ID " +
+            "FROM DATASET_CONFIGURATION_MAGAZINE " +
+            "WHERE DATASET_CONFIGURATION_MAGAZINE.CONFIGURATION_ID_AFTER = ?1 ", nativeQuery = true)
+    List findMagazineIdByConfigurationAfter(Long id);
 
 }
