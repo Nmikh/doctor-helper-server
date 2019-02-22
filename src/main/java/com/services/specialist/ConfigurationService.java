@@ -123,15 +123,18 @@ public class ConfigurationService {
         return new ConfigurationPage(configurationPage.getTotalPages(), configurationPage.getContent());
     }
 
-    public void activateConfiguration(Long configurationId, SpecialistEntity specialistEntity) {
-        DatasetConfigurationMagazineEntity datasetConfigurationMagazineEntity = new DatasetConfigurationMagazineEntity();
-
+    public boolean activateConfiguration(Long configurationId, SpecialistEntity specialistEntity) {
         DatasetConfigurationEntity datasetConfigurationAfter = configurationRepository.findById(configurationId).get();
         DatasetConfigurationEntity datasetConfigurationBefore = configurationRepository.findByDatasetEntityAndActiveTrue(datasetConfigurationAfter.getDatasetEntity());
 
+        if (datasetConfigurationAfter.getDatasetEntity().getSpecialistEntity().getId() != specialistEntity.getId()) {
+            return false;
+        }
+
+        DatasetConfigurationMagazineEntity datasetConfigurationMagazineEntity = new DatasetConfigurationMagazineEntity();
         if (datasetConfigurationBefore != null) {
             if (datasetConfigurationAfter.getId() == datasetConfigurationBefore.getId()) {
-                return;
+                return true;
             }
 
             datasetConfigurationBefore.setActive(false);
@@ -147,24 +150,25 @@ public class ConfigurationService {
         datasetConfigurationMagazineEntity.setSpecialistEntity(specialistEntity);
 
         magazineService.createMagazineRow(datasetConfigurationMagazineEntity);
+        return true;
     }
 
-    public List<SvmKernelParametrsEntity> getAllSvmTypes(){
+    public List<SvmKernelParametrsEntity> getAllSvmTypes() {
         return svmKernelParamsRepository.findBySvmKernelTrue();
     }
 
-    public List<SvmKernelParametrsEntity> getAllKernelTypes(){
+    public List<SvmKernelParametrsEntity> getAllKernelTypes() {
         return svmKernelParamsRepository.findBySvmKernelFalse();
     }
 
-    public DatasetConfigurationEntity findActiveConfiguration(DatasetEntity datasetEntity){
+    public DatasetConfigurationEntity findActiveConfiguration(DatasetEntity datasetEntity) {
         return configurationRepository.findByDatasetEntityAndActiveTrue(datasetEntity);
     }
 
-    public boolean removeConfiguration(Long configurationId, SpecialistEntity specialistEntity){
+    public boolean removeConfiguration(Long configurationId, SpecialistEntity specialistEntity) {
         DatasetConfigurationEntity datasetConfiguration = configurationRepository.findById(configurationId).get();
 
-        if(datasetConfiguration.getSpecialistEntity().getId() != specialistEntity.getId()){
+        if (datasetConfiguration.getSpecialistEntity().getId() != specialistEntity.getId()) {
             return false;
         }
 

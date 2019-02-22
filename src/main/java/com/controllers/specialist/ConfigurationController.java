@@ -130,7 +130,9 @@ public class ConfigurationController {
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
 
-        configurationService.activateConfiguration(configurationId, specialistEntity);
+        if(!configurationService.activateConfiguration(configurationId, specialistEntity)){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity(HttpStatus.OK);
     }
