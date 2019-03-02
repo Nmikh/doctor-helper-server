@@ -108,11 +108,11 @@ public class DataSetConfigurationResultService {
                 configurationResultRepository.save(conformalPrediction);
 
                 for (int j = 0; j < SIGNIFICANCE.length; j++) {
-                    if (conformalPrediction.getAlphaPositive() < SIGNIFICANCE[j]
-                            && conformalPrediction.getAlphaNegative() < SIGNIFICANCE[j]) {
+                    if (conformalPrediction.getpPositive() < SIGNIFICANCE[j]
+                            && conformalPrediction.getpNegative() < SIGNIFICANCE[j]) {
                         confusionMatrix.get(j).setEmptyPredictions(confusionMatrix.get(j).getEmptyPredictions() + 1);
-                    } else if (conformalPrediction.getAlphaPositive() >= SIGNIFICANCE[j]
-                            && conformalPrediction.getAlphaNegative() >= SIGNIFICANCE[j]) {
+                    } else if (conformalPrediction.getpPositive() >= SIGNIFICANCE[j]
+                            && conformalPrediction.getpNegative() >= SIGNIFICANCE[j]) {
                         confusionMatrix.get(j).setUncertainPredictions(confusionMatrix.get(j).getUncertainPredictions() + 1);
                     } else if (conformalPrediction.getRealClass() == 1
                             && conformalPrediction.getPredictClass() == 1) {
@@ -199,11 +199,11 @@ public class DataSetConfigurationResultService {
                 configurationResult.add(conformalPrediction);
 
                 for (int j = 0; j < SIGNIFICANCE.length; j++) {
-                    if (conformalPrediction.getAlphaPositive() < SIGNIFICANCE[j]
-                            && conformalPrediction.getAlphaNegative() < SIGNIFICANCE[j]) {
+                    if (conformalPrediction.getpPositive() < SIGNIFICANCE[j]
+                            && conformalPrediction.getpNegative() < SIGNIFICANCE[j]) {
                         confusionMatrix.get(j).setEmptyPredictions(confusionMatrix.get(j).getEmptyPredictions() + 1);
-                    } else if (conformalPrediction.getAlphaPositive() >= SIGNIFICANCE[j]
-                            && conformalPrediction.getAlphaNegative() >= SIGNIFICANCE[j]) {
+                    } else if (conformalPrediction.getpPositive() >= SIGNIFICANCE[j]
+                            && conformalPrediction.getpNegative() >= SIGNIFICANCE[j]) {
                         confusionMatrix.get(j).setUncertainPredictions(confusionMatrix.get(j).getUncertainPredictions() + 1);
                     } else if (conformalPrediction.getRealClass() == 1
                             && conformalPrediction.getPredictClass() == 1) {
