@@ -14,6 +14,9 @@ public class DatasetObjectsEntity implements Serializable {
     @Column(name = "ID")
     private long id;
 
+    @Column(name = "USER_OBJECT_ID")
+    private long userObjectId;
+
     @Basic
     @Column(name = "PARAMS")
     private String params;
@@ -33,6 +36,14 @@ public class DatasetObjectsEntity implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getUserObjectId() {
+        return userObjectId;
+    }
+
+    public void setUserObjectId(long userObjectId) {
+        this.userObjectId = userObjectId;
     }
 
     public String getParams() {

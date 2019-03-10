@@ -44,7 +44,7 @@ public class DataSetObjectsService {
 
         String result = "";
         for (int i = 0; i < objects.size(); i++) {
-            result = result + objects.get(i).getId() + ","
+            result = result + objects.get(i).getUserObjectId() + ","
                     + objects.get(i).getObjectClass() + ","
                     + objects.get(i).getParams() + "\r\n";
         }
@@ -89,6 +89,7 @@ public class DataSetObjectsService {
 
             String[] splitObject = object.split("\\,", 3);
 
+            datasetObjectsEntity.setUserObjectId(Long.parseLong(splitObject[0]));
             datasetObjectsEntity.setObjectClass(Long.parseLong(splitObject[1]));
             datasetObjectsEntity.setParams(splitObject[2]);
             datasetObjectsEntity.setDatasetEntity(dataSet);
